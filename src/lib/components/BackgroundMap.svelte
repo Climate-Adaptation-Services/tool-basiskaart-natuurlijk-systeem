@@ -4,10 +4,12 @@
   import * as d3 from "d3";
   import Shape from '$lib/components/Shape.svelte'
   import { onMount } from 'svelte'
-  import { buurtGrenzen, selectedUID, mapBounds, zoomLevel, mapSelection, mapCenter, leafletMap, tileLayers, tilelayerOpacity, tableSelection } from '$lib/stores.js';
+  // import { buurtGrenzen, selectedUID, mapBounds, zoomLevel, mapSelection, mapCenter, leafletMap, tileLayers, tilelayerOpacity, tableSelection } from '$lib/stores.js';
+  import { leafletMap, subtypeFeatures, mapBounds, zoomLevel, mapSelection, mapCenter } from '$lib/stores.js';
+
   import "leaflet-search";
   import "leaflet-search/dist/leaflet-search.min.css";
-  import LoadingIcon from './LoadingIcon.svelte'
+  // import LoadingIcon from './LoadingIcon.svelte'
   import * as topojson from "topojson-client";
   import * as topojsonsimplify from "topojson-simplify";
   // import 'leaflet.control.opacity';
@@ -16,14 +18,16 @@
   // export let provinces
   export let datajson
 
-  let buurtGrenzenData = topojsonsimplify.presimplify(datajson[0])
-  buurtGrenzenData = topojson.feature(buurtGrenzenData, buurtGrenzenData.objects.GevolgbeperkingGebiedenDiepteKans20221221)
+  console.log(datajson)
 
-  buurtGrenzen.set(buurtGrenzenData.features)
+  let bnsData = topojsonsimplify.presimplify(datajson[0])
+  bnsData = topojson.feature(bnsData, bnsData.objects.Basiskaart_Natuurlij_ProjectNTv2)
+
+  subtypeFeatures.set(bnsData.features)
 
   const mapOptions = {
     center: [52.2, 5.2],
-    zoom: 7,
+    zoom: 8,
   };
 
   const tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
@@ -42,103 +46,89 @@
     mapBounds.set($leafletMap.getBounds())
     zoomLevel.set($leafletMap.getZoom())
     mapCenter.set($leafletMap.getCenter())
-    mapSelection.set(null)
-    $leafletMap.on('zoomstart', function() {
-      d3.select('.spinner-item')
-        .style('visibility', 'visible')
-    })
-    $leafletMap.on('drag', function() {
-      d3.select('.spinner-item')
-        .style('visibility', 'visible')
-    })
-    $leafletMap.on('moveend', function() {
-      mapBounds.set($leafletMap.getBounds())
-      zoomLevel.set($leafletMap.getZoom())
-      mapCenter.set($leafletMap.getCenter())
+    // mapSelection.set(null)
+    // $leafletMap.on('zoomstart', function() {
+    //   d3.select('.spinner-item')
+    //     .style('visibility', 'visible')
+    // })
+    // $leafletMap.on('drag', function() {
+    //   d3.select('.spinner-item')
+    //     .style('visibility', 'visible')
+    // })
+    // $leafletMap.on('moveend', function() {
+    //   mapBounds.set($leafletMap.getBounds())
+    //   zoomLevel.set($leafletMap.getZoom())
+    //   mapCenter.set($leafletMap.getCenter())
 
-      d3.select('.spinner-item')
-        .style('visibility', 'hidden')
-    });
+    //   d3.select('.spinner-item')
+    //     .style('visibility', 'hidden')
+    // });
 
-    var searchLayer = L.layerGroup().addTo($leafletMap);
-    $leafletMap.addControl( new L.Control.Search({
-      url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
-      jsonpParam: 'json_callback',
-      propertyName: 'display_name',
-      propertyLoc: ['lat','lon'],
-      marker: L.circleMarker([0,0],{radius:30}),
-      autoCollapse: true,
-      autoType: false,
-      minLength: 2
-    }) );
+    // var searchLayer = L.layerGroup().addTo($leafletMap);
+    // $leafletMap.addControl( new L.Control.Search({
+    //   url: 'https://nominatim.openstreetmap.org/search?format=json&q={s}',
+    //   jsonpParam: 'json_callback',
+    //   propertyName: 'display_name',
+    //   propertyLoc: ['lat','lon'],
+    //   marker: L.circleMarker([0,0],{radius:30}),
+    //   autoCollapse: true,
+    //   autoType: false,
+    //   minLength: 2
+    // }) );
 
-    d3.select('.spinner-item')
-      .style('visibility', 'hidden')
+    // d3.select('.spinner-item')
+    //   .style('visibility', 'hidden')
 
-    for(const diepte_kans in $tileLayers){
-      $tileLayers[diepte_kans].addTo($leafletMap);
-    };
+    // for(const diepte_kans in $tileLayers){
+    //   $tileLayers[diepte_kans].addTo($leafletMap);
+    // };
 
   })
 
-  const waterdiepteColors = {
-    '0cm':'#c3e8f0',
-    '20cm':'#a5cff0',
-    '50cm':'#7ca5d8',
-    '200cm':'#6f7bba'
-  }
+  // function clickRemove(){
+  //   d3.select('.spinner-item')
+  //     .style('visibility', 'visible')
 
-  function kansenClass(kans){
-    return (kans > 30000) ? '1xper100000jaar'
-    : (kans > 3000) ? '1xper10000jaar'
-    : (kans > 300) ? '1xper1000jaar'
-    : (kans > 30) ? '1xper100jaar'
-    : null
-  }
-  function clickRemove(){
-    d3.select('.spinner-item')
-      .style('visibility', 'visible')
+  //   setTimeout(() => {
+  //     mapSelection.set(null)
+  //     d3.select('.spinner-item')
+  //       .style('visibility', 'hidden')
+  //   }, 1);
+  // }
 
-    setTimeout(() => {
-      mapSelection.set(null)
-      d3.select('.spinner-item')
-        .style('visibility', 'hidden')
-    }, 1);
-  }
+  // $: visibleRemoveSelection = ($mapSelection !== null)
+  //   ? 'visible'
+  //   : 'hidden';
 
-  $: visibleRemoveSelection = ($mapSelection !== null)
-    ? 'visible'
-    : 'hidden';
-
-  function onOpacityChange(event){
-    for(const diepte_kans in $tileLayers){
-      $tileLayers[diepte_kans].remove();
-    };
-    tilelayerOpacity.set(event.target.value)
-    // if there is a selection in the table, only add those layers
-    if($tableSelection !== null){
-      $tableSelection.forEach(diepte_kans => {
-        $tileLayers[diepte_kans[0] + '_' + diepte_kans[1]].addTo($leafletMap);
-      });
-    }else{
-      for(const diepte_kans in $tileLayers){
-        $tileLayers[diepte_kans].addTo($leafletMap);
-      };
-    }
-  }
+  // function onOpacityChange(event){
+  //   for(const diepte_kans in $tileLayers){
+  //     $tileLayers[diepte_kans].remove();
+  //   };
+  //   tilelayerOpacity.set(event.target.value)
+  //   // if there is a selection in the table, only add those layers
+  //   if($tableSelection !== null){
+  //     $tableSelection.forEach(diepte_kans => {
+  //       $tileLayers[diepte_kans[0] + '_' + diepte_kans[1]].addTo($leafletMap);
+  //     });
+  //   }else{
+  //     for(const diepte_kans in $tileLayers){
+  //       $tileLayers[diepte_kans].addTo($leafletMap);
+  //     };
+  //   }
+  // }
 
 </script>
 
 <div class="backgroundMap">
-  <span class='opacity_span'>
+  <!-- <span class='opacity_span'>
     <label for='opacity_slider'>Opacity</label>
     <input id='opacity_slider' value='100' type="range" min="0" max="100" on:change={onOpacityChange}>
-  </span>
+  </span> -->
 
-  <LoadingIcon />
+  <!-- <LoadingIcon /> -->
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <svg class='removeselectionmap' visibility={visibleRemoveSelection} on:click={clickRemove} cursor='pointer'
+  <!-- <svg class='removeselectionmap' visibility={visibleRemoveSelection} on:click={clickRemove} cursor='pointer'
     transform='translate({1.5}, {-40})'>
     <rect
       width={200}
@@ -153,12 +143,12 @@
       transform='translate({15}, {7}) '
       width={30} height={30}/>
     <text class='textremoveselection' x={50} y={27}>Verwijder selectie</text>
-  </svg>
+  </svg> -->
 
   {#if browser}
     <LeafletMap bind:this={$leafletMap} options={mapOptions}>
       <TileLayer url={tileUrl} options={tileLayerOptions}/>
-      {#each $buurtGrenzen as feature, i}
+      {#each $subtypeFeatures as feature, i}
         <Shape {feature} />
       {/each}
     </LeafletMap>

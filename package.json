@@ -20,11 +20,13 @@
 	"type": "module",
 	"dependencies": {
 		"@turf/flip": "^6.5.0",
+		"@turf/rewind": "^6.5.0",
 		"d3": "^7.8.2",
 		"esri-leaflet": "^3.0.10",
 		"leaflet": "^1.9.3",
 		"leaflet-search": "^3.0.9",
 		"leaflet.control.opacity": "^1.6.0",
+		"lodash": "^4.17.21",
 		"svelte-leafletjs": "^0.10.0",
 		"svelte-loading-spinners": "^0.3.4",
 		"svelte-simple-modal": "^1.5.2",
