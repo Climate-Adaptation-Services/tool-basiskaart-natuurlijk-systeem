@@ -43,9 +43,9 @@
           <text>{landschapstype}</text>
             {#each landschapstypen[landschapstype] as subtype, j}
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-              <g on:click={() => mapSelection.set(getBSNSNCode(subtype))}>
+              <g on:click={() => mapSelection.set(getBSNSNCode(subtype))} cursor='pointer'>
                 <rect height='1em' width='40px' x=0 y='{j}em' fill={subtypenColors[subtype]}></rect>
-                <text y='{j+1}em' x='45px' style="{($mapSelection === getBSNSNCode(subtype)) ? 'font-weight:bold' : ''};cursor:default">{subtype}</text>
+                <text y='{j+1}em' x='45px' style="{($mapSelection === getBSNSNCode(subtype)) ? 'font-weight:bold' : ''}">{subtype}</text>
               </g>
             {/each}
         </g>

@@ -6,8 +6,8 @@
   import { onMount } from 'svelte'
   import { leafletMap, subtypeFeatures } from '$lib/stores.js';
 
-  import "leaflet-search";
-  import "leaflet-search/dist/leaflet-search.min.css";
+  // import "leaflet-search";
+  // import "leaflet-search/dist/leaflet-search.min.css";
   // import LoadingIcon from './LoadingIcon.svelte'
   import * as topojson from "topojson-client";
   import * as topojsonsimplify from "topojson-simplify";
