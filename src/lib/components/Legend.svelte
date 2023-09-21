@@ -32,20 +32,28 @@
     return dataKansenDreigingen.filter(d => d['Sublandschap'] === subtype)[0]['BKNSN_code'];
   }
 
+  function getYPosition(group, i){
+    let yPos = 0
+    for(let j=0;j<i;j++){
+      yPos += landschapstypen[group[j]].length
+    }
+    return yPos*14 + i*35
+  }
+
 </script>
 
 
-<svg class='svg-legend'>
+<svg class='svg-legend' viewBox="0 0 900 400" preserveAspectRatio="xMidYMid meet">
   <g transform='translate({margin.left},{margin.top})'>
     {#each [group1, group2, group3] as group, k}
       {#each group as landschapstype, i}
-        <g transform='translate({k*300},{i*100})'>
+        <g transform='translate({k*300},{getYPosition(group, i)})'>
           <text>{landschapstype}</text>
             {#each landschapstypen[landschapstype] as subtype, j}
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
               <g on:click={() => mapSelection.set(getBSNSNCode(subtype))} cursor='pointer'>
                 <rect height='1em' width='40px' x=0 y='{j}em' fill={subtypenColors[subtype]}></rect>
-                <text y='{j+1}em' x='45px' style="{($mapSelection === getBSNSNCode(subtype)) ? 'font-weight:bold' : ''}">{subtype}</text>
+                <text y='{j+0.85}em' x='45px' style="{($mapSelection === getBSNSNCode(subtype)) ? 'font-weight:bold' : ''}">{subtype}</text>
               </g>
             {/each}
         </g>
