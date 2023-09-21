@@ -1,24 +1,18 @@
 <script>
   import { Polygon } from 'svelte-leafletjs?client';
   import { browser } from '$app/environment'
-  import * as d3 from "d3";
-  import { mapBounds, zoomLevel } from '$lib/stores.js';
+  import { mapSelection } from '$lib/stores.js';
   import flip from "@turf/flip";
-  import rewind from "@turf/rewind";
 
   import { bind } from 'svelte-simple-modal';
   import AlertPopup from '$lib/components/AlertPopup.svelte';
 
+  import { subtypenColors } from '$lib/stores.js';
+
   export let feature;
+  export let dataKansenDreigingen
 
   // console.log(feature)
-
-  // const toSingleChance = {
-  //   '30300':'100',
-  //   '3003000':'1000',
-  //   '300030000':'10000',
-  //   '30000300000':'100000'
-  // }
 
   // const clickEvents = ['click']
 
@@ -60,51 +54,25 @@
   //   weight = 0
   // }
 
-  // $: northEast = $mapBounds._northEast
-  // $: southWest = $mapBounds._southWest
-  // $: featureCenter = d3.geoCentroid(feature)
-
-  // function notTooSmall(){
-  //   let area = d3.geoArea(flip(feature))
-  //   if($zoomLevel < 10 && area < 0.00000003){
-  //     return false
-  //   }
-  //   if($zoomLevel < 10.5 && area < 0.00000002){
-  //     return false
-  //   }
-  //   if($zoomLevel < 11 && area < 0.00000001){
-  //     return false
-  //   }
-
-  //   return true
-  // }
-
-
-  // let visible;
-  // $: if(
-  //   $mapBounds !== 0 &&
-  //   (featureCenter[1] < northEast.lat+0.05 && featureCenter[1] > southWest.lat-0.05) &&
-  //   (featureCenter[0] < northEast.lng+0.05 && featureCenter[0] > southWest.lng-0.05) &&
-
-  //   notTooSmall()
-  // ){
-  //   visible = true;
-  // }else{
-  //   visible = false;
-  // }
-
-
 </script>
 
 {#if browser}
 <!-- && tableSelected && feature.geometry !== null} -->
   <Polygon
-    latLngs={rewind(feature).geometry.coordinates}
-    color={'red'}
-    fillOpacity={1}
-    fillColor={'black'}
+    latLngs={flip(feature).geometry.coordinates}
+    fillColor={(feature.properties.BKNSN_CODE.length > 1 && feature.properties.BKNSN_CODE !== 'Hv4' && feature.properties.BKNSN_CODE !== 'Zk7')
+            ? subtypenColors[dataKansenDreigingen.filter(d => d.BKNSN_code === feature.properties.BKNSN_CODE)[0]['Sublandschap']]
+            : 'none'}
+    fillOpacity={($mapSelection) 
+      ? ($mapSelection === feature.properties.BKNSN_CODE) ? 1 : 0.3 
+      : 1
+    }
+    color={'none'}
+    events={['click']}
+    on:click={() => mapSelection.set(feature.properties.BKNSN_CODE)}
   />
 {/if}
+<!-- on:mouseout={() => mapSelection.set(null)} -->
 
 
 <style></style>

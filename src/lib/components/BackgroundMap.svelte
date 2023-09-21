@@ -4,8 +4,7 @@
   import * as d3 from "d3";
   import Shape from '$lib/components/Shape.svelte'
   import { onMount } from 'svelte'
-  // import { buurtGrenzen, selectedUID, mapBounds, zoomLevel, mapSelection, mapCenter, leafletMap, tileLayers, tilelayerOpacity, tableSelection } from '$lib/stores.js';
-  import { leafletMap, subtypeFeatures, mapBounds, zoomLevel, mapSelection, mapCenter } from '$lib/stores.js';
+  import { leafletMap, subtypeFeatures } from '$lib/stores.js';
 
   import "leaflet-search";
   import "leaflet-search/dist/leaflet-search.min.css";
@@ -17,11 +16,12 @@
 
   // export let provinces
   export let datajson
+  export let dataKansenDreigingen
 
   console.log(datajson)
 
   let bnsData = topojsonsimplify.presimplify(datajson[0])
-  bnsData = topojson.feature(bnsData, bnsData.objects.Basiskaart_Natuurlij_ProjectNTv2)
+  bnsData = topojson.feature(bnsData, bnsData.objects.BKNSN_GeoJSON)
 
   subtypeFeatures.set(bnsData.features)
 
@@ -43,9 +43,9 @@
   onMount(() => {
 
     leafletMap.set($leafletMap.getMap())
-    mapBounds.set($leafletMap.getBounds())
-    zoomLevel.set($leafletMap.getZoom())
-    mapCenter.set($leafletMap.getCenter())
+    // mapBounds.set($leafletMap.getBounds())
+    // zoomLevel.set($leafletMap.getZoom())
+    // mapCenter.set($leafletMap.getCenter())
     // mapSelection.set(null)
     // $leafletMap.on('zoomstart', function() {
     //   d3.select('.spinner-item')
@@ -149,7 +149,7 @@
     <LeafletMap bind:this={$leafletMap} options={mapOptions}>
       <TileLayer url={tileUrl} options={tileLayerOptions}/>
       {#each $subtypeFeatures as feature, i}
-        <Shape {feature} />
+        <Shape {feature} {dataKansenDreigingen} />
       {/each}
     </LeafletMap>
   {/if}
@@ -158,10 +158,10 @@
 
 <style>
   .opacity_span{
-    position: absolute;
+    position: fixed;
     z-index: 2000;
     top:20px;
-    left:100px;
+    right:100px;
   }
 
   input[type=range]{

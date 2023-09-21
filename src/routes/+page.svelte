@@ -29,7 +29,7 @@
 	</div>
 
 	<div class='map' bind:clientWidth={w} bind:clientHeight={h} >
-		<Map mapWidth={w} mapHeight={h} />
+		<Map mapWidth={w} mapHeight={h} {dataKansenDreigingen}/>
 	</div>
 </div>
 
