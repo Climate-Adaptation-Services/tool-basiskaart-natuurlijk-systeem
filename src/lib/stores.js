@@ -23,7 +23,7 @@ export const subtypenColors = {
   'Meerbodem':'#6893AD',
   // 'Kreekrug':'#67CAB4',
   'Veenrest':'#AA8DBA',
-  'Stroomrug oeverwal':'#C0F065',
+  'Stroomrug, oeverwal':'#C0F065',
   'Rivierkom':'#66AC94',
   'Uiterwaard':'#8B7CAA',
   'Overslaggronden':'#BF7C84',
