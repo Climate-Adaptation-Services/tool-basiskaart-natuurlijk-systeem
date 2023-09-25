@@ -1,6 +1,7 @@
 <script>
   import { uniq, map } from 'lodash'
   import { subtypenColors, mapSelection } from '$lib/stores';
+  import { select } from 'd3';
 
   export let legendWidth;
   export let legendHeight;
@@ -40,6 +41,18 @@
     return yPos*14 + i*35
   }
 
+  const createClassName = (subtype) => subtype.replaceAll('/','').replaceAll(' ','').replaceAll('-','').replaceAll(',','')
+
+  function mouseover(subtype, i){
+    select('.rect-' + createClassName(subtype) + '-' + i)
+      .style('fill', 'steelblue')
+  }
+
+  function mouseout(subtype, i){
+    select('.rect-' + createClassName(subtype) + '-' + i)
+    .style('fill', 'none')
+  }
+
 </script>
 
 
@@ -48,12 +61,13 @@
     {#each [group1, group2, group3] as group, k}
       {#each group as landschapstype, i}
         <g transform='translate({k*300},{getYPosition(group, i)})'>
-          <text>{landschapstype}</text>
+          <text class='hoofdtype'>{landschapstype}</text>
             {#each landschapstypen[landschapstype] as subtype, j}
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-              <g on:click={() => mapSelection.set(getBSNSNCode(subtype))} cursor='pointer'>
-                <rect height='1em' width='40px' x=0 y='{j}em' fill={subtypenColors[subtype]}></rect>
-                <text y='{j+0.85}em' x='45px' style="{($mapSelection === getBSNSNCode(subtype)) ? 'font-weight:bold' : ''}">{subtype}</text>
+              <g on:click={() => mapSelection.set(getBSNSNCode(subtype))} cursor='pointer' on:mouseover={() => mouseover(subtype,i)} on:mouseout={() => mouseout(subtype,i)}>
+                <rect class='rect-{createClassName(subtype)}-{i}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='none' stroke='{($mapSelection === getBSNSNCode(subtype)) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
+                <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={subtypenColors[subtype]}></rect>
+                <text y='{j+1.34}em' x='45px' style="{($mapSelection === getBSNSNCode(subtype)) ? 'font-weight:bold' : ''}">{subtype}</text>
               </g>
             {/each}
         </g>
@@ -69,6 +83,11 @@
   .svg-legend{
     width:100%;
     height: 100%;
+  }
+
+  .hoofdtype{
+    font-size: 14px;
+    font-weight: bold;
   }
 
 </style>
