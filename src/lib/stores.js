@@ -6,6 +6,7 @@ export const leafletMap = writable(null)
 // export const mapCenter = writable(0);
 export const mapSelection = writable(0);
 export const subtypeFeatures = writable(null)
+export const shapeOpacity = writable(1)
 
 
 export const subtypenColors = {

@@ -4,7 +4,7 @@
   import * as d3 from "d3";
   import Shape from '$lib/components/Shape.svelte'
   import { onMount } from 'svelte'
-  import { leafletMap, subtypeFeatures } from '$lib/stores.js';
+  import { leafletMap, subtypeFeatures, shapeOpacity } from '$lib/stores.js';
 
   // import "leaflet-search";
   // import "leaflet-search/dist/leaflet-search.min.css";
@@ -100,30 +100,17 @@
   //   ? 'visible'
   //   : 'hidden';
 
-  // function onOpacityChange(event){
-  //   for(const diepte_kans in $tileLayers){
-  //     $tileLayers[diepte_kans].remove();
-  //   };
-  //   tilelayerOpacity.set(event.target.value)
-  //   // if there is a selection in the table, only add those layers
-  //   if($tableSelection !== null){
-  //     $tableSelection.forEach(diepte_kans => {
-  //       $tileLayers[diepte_kans[0] + '_' + diepte_kans[1]].addTo($leafletMap);
-  //     });
-  //   }else{
-  //     for(const diepte_kans in $tileLayers){
-  //       $tileLayers[diepte_kans].addTo($leafletMap);
-  //     };
-  //   }
-  // }
+  function onOpacityChange(event){
+    shapeOpacity.set(event.target.value/100)
+  }
 
 </script>
 
 <div class="backgroundMap">
-  <!-- <span class='opacity_span'>
+  <span class='opacity_span'>
     <label for='opacity_slider'>Opacity</label>
     <input id='opacity_slider' value='100' type="range" min="0" max="100" on:change={onOpacityChange}>
-  </span> -->
+  </span>
 
   <!-- <LoadingIcon /> -->
 

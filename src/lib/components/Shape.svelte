@@ -7,7 +7,7 @@
   import { bind } from 'svelte-simple-modal';
   import AlertPopup from '$lib/components/AlertPopup.svelte';
 
-  import { subtypenColors } from '$lib/stores.js';
+  import { subtypenColors, shapeOpacity } from '$lib/stores.js';
 
   export let feature;
   export let dataKansenDreigingen
@@ -64,8 +64,8 @@
             ? subtypenColors[dataKansenDreigingen.filter(d => d.BKNSN_code === feature.properties.BKNSN_CODE)[0]['Sublandschap']]
             : 'none'}
     fillOpacity={($mapSelection) 
-      ? ($mapSelection === feature.properties.BKNSN_CODE) ? 1 : 0.1 
-      : 1
+      ? ($mapSelection === feature.properties.BKNSN_CODE) ? $shapeOpacity : 0.1 
+      : $shapeOpacity
     }
     color={'none'}
     events={['click']}
