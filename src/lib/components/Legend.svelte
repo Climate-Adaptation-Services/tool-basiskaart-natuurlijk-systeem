@@ -43,14 +43,14 @@
 
   const createClassName = (subtype) => subtype.replaceAll('/','').replaceAll(' ','').replaceAll('-','').replaceAll(',','')
 
-  function mouseover(subtype, i){
-    select('.rect-' + createClassName(subtype) + '-' + i)
+  function mouseover(subtype, i, j){
+    select('.rect-' + createClassName(subtype) + '-' + i + '-' + j)
       .style('fill', 'steelblue')
   }
 
-  function mouseout(subtype, i){
-    select('.rect-' + createClassName(subtype) + '-' + i)
-    .style('fill', 'none')
+  function mouseout(subtype, i, j){
+    select('.rect-' + createClassName(subtype) + '-' + i + '-' + j)
+    .style('fill', 'white')
   }
 
 </script>
@@ -64,8 +64,8 @@
           <text class='hoofdtype'>{landschapstype}</text>
             {#each landschapstypen[landschapstype] as subtype, j}
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-              <g on:click={() => mapSelection.set(getBSNSNCode(subtype))} cursor='pointer' on:mouseover={() => mouseover(subtype,i)} on:mouseout={() => mouseout(subtype,i)}>
-                <rect class='rect-{createClassName(subtype)}-{i}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='none' stroke='{($mapSelection === getBSNSNCode(subtype)) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
+              <g on:click={() => mapSelection.set(getBSNSNCode(subtype))} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
+                <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' stroke='{($mapSelection === getBSNSNCode(subtype)) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
                 <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={subtypenColors[subtype]}></rect>
                 <text y='{j+1.34}em' x='45px' style="{($mapSelection === getBSNSNCode(subtype)) ? 'font-weight:bold' : ''}">{subtype}</text>
               </g>
