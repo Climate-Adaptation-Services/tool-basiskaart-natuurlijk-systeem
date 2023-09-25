@@ -64,7 +64,7 @@
             ? subtypenColors[dataKansenDreigingen.filter(d => d.BKNSN_code === feature.properties.BKNSN_CODE)[0]['Sublandschap']]
             : 'none'}
     fillOpacity={($mapSelection) 
-      ? ($mapSelection === feature.properties.BKNSN_CODE) ? 1 : 0.2 
+      ? ($mapSelection === feature.properties.BKNSN_CODE) ? 1 : 0.1 
       : 1
     }
     color={'none'}
