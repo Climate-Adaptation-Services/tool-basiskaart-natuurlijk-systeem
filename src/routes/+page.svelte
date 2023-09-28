@@ -54,6 +54,7 @@
 
 .legend{
 	height:40%;
+	position: relative;
 }
 
 .kansen-bedreigingen{

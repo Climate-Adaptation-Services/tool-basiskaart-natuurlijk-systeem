@@ -170,12 +170,4 @@
     width:100%;
 	}
 
-  .removeselectionmap{
-    position:absolute;
-    left:20vw;
-    top:10vh;
-    z-index: 10000;
-    opacity:0.8;
-  }
-
 </style>

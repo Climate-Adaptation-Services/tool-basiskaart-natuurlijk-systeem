@@ -2,6 +2,7 @@
   import { uniq, map } from 'lodash'
   import { subtypenColors, mapSelection, clickLocation } from '$lib/stores';
   import { select } from 'd3';
+    import { Circle } from 'svelte-loading-spinners';
 
   export let legendWidth;
   export let legendHeight;
@@ -54,7 +55,6 @@
   }
 
   function clickRemove(){
-    console.log('ello')
     select('.spinner-item')
       .style('visibility', 'visible')
 
@@ -80,7 +80,16 @@
 
 </script>
 
-
+<div class='removeselection'>
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <svg cursor='pointer' class='svgremoveselection' on:click={() => clickRemove()} style='visibility:{($mapSelection) ? 'visible' : 'hidden'}'>
+    <!-- <rect width='60px' height='70px' stroke='black' fill='none'></rect> -->
+    <!-- <circle cx='25' cy='25' r=20 fill='white'></circle> -->
+    <path d='M20 10, L40,30, M20 30, L40 10' stroke='black' fill="black" stroke-linecap="round" stroke-width='6'></path>
+    <text x='30' y='50' fill='darkred' text-anchor='middle'>Verwijder</text>
+    <text x='30' y='65' fill='darkred' text-anchor='middle'>selectie</text>
+  </svg>
+</div>
 <svg class='svg-legend' viewBox="0 0 900 400" preserveAspectRatio="xMidYMid meet">
   <rect width='100%' height='100%' fill='white' on:click={() => clickRemove()}></rect>
   <g transform='translate({margin.left},{margin.top})'>
@@ -90,6 +99,7 @@
           <text class='hoofdtype'>{landschapstype}</text>
             {#each landschapstypen[landschapstype] as subtype, j}
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+              <!-- svelte-ignore a11y-click-events-have-key-events -->
               <g on:click={() => click(subtype)} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
                 <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' stroke='{($mapSelection === getBSNSNCode(subtype)) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
                 <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={subtypenColors[subtype]}></rect>
@@ -111,9 +121,24 @@
     height: 100%;
   }
 
+  .svgremoveselection{
+    width:100%;
+    height: 100%;
+  }
+
   .hoofdtype{
     font-size: 14px;
     font-weight: bold;
+  }
+
+  .removeselection{
+    position:absolute;
+    right:10px;
+    top:10px;
+    z-index: 10000;
+    opacity:0.8;
+    width:60px;
+    height:100px;
   }
 
 </style>
