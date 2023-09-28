@@ -1,10 +1,10 @@
 <script>
   import { browser } from '$app/environment'
-  import { LeafletMap, TileLayer } from 'svelte-leafletjs?client';
+  import { LeafletMap, TileLayer, Marker } from 'svelte-leafletjs?client';
   import * as d3 from "d3";
   import Shape from '$lib/components/Shape.svelte'
   import { onMount } from 'svelte'
-  import { leafletMap, subtypeFeatures, shapeOpacity } from '$lib/stores.js';
+  import { leafletMap, subtypeFeatures, shapeOpacity, mapSelection, clickLocation } from '$lib/stores.js';
 
   // import "leaflet-search";
   // import "leaflet-search/dist/leaflet-search.min.css";
@@ -138,6 +138,9 @@
       {#each $subtypeFeatures as feature, i}
         <Shape {feature} {dataKansenDreigingen} />
       {/each}
+      {#if $mapSelection !== null}
+        <Marker latLng={[$clickLocation.lat, $clickLocation.lng]}/>
+      {/if}
     </LeafletMap>
   {/if}
 

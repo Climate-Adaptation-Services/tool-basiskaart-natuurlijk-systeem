@@ -1,13 +1,12 @@
 <script>
   import { Polygon } from 'svelte-leafletjs?client';
   import { browser } from '$app/environment'
-  import { mapSelection } from '$lib/stores.js';
   import flip from "@turf/flip";
 
   import { bind } from 'svelte-simple-modal';
   import AlertPopup from '$lib/components/AlertPopup.svelte';
 
-  import { subtypenColors, shapeOpacity } from '$lib/stores.js';
+  import { subtypenColors, shapeOpacity, mapSelection, clickLocation } from '$lib/stores.js';
 
   export let feature;
   export let dataKansenDreigingen
@@ -54,6 +53,11 @@
   //   weight = 0
   // }
 
+  function click(e, feature){
+    clickLocation.set(e.detail.latlng)
+    mapSelection.set(feature.properties.BKNSN_CODE)
+  }
+
 </script>
 
 {#if browser}
@@ -69,7 +73,7 @@
     }
     color={'none'}
     events={['click']}
-    on:click={() => mapSelection.set(feature.properties.BKNSN_CODE)}
+    on:click={e => click(e, feature)}
   />
 {/if}
 <!-- on:mouseout={() => mapSelection.set(null)} -->
