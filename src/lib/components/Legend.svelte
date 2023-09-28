@@ -1,6 +1,6 @@
 <script>
   import { uniq, map } from 'lodash'
-  import { subtypenColors, mapSelection } from '$lib/stores';
+  import { subtypenColors, mapSelection, clickLocation } from '$lib/stores';
   import { select } from 'd3';
 
   export let legendWidth;
@@ -53,10 +53,36 @@
     .style('fill', 'white')
   }
 
+  function clickRemove(){
+    console.log('ello')
+    select('.spinner-item')
+      .style('visibility', 'visible')
+
+    setTimeout(() => {
+      mapSelection.set(null)
+      clickLocation.set(null)
+      select('.spinner-item')
+        .style('visibility', 'hidden')
+    }, 1);
+  }
+
+  function click(subtype){
+    if($mapSelection === null){
+      select('.spinner-item')
+      .style('visibility', 'visible')
+    }
+    setTimeout(() => {
+      mapSelection.set(getBSNSNCode(subtype))
+      select('.spinner-item')
+        .style('visibility', 'hidden')
+    }, 1);
+  }
+
 </script>
 
 
 <svg class='svg-legend' viewBox="0 0 900 400" preserveAspectRatio="xMidYMid meet">
+  <rect width='100%' height='100%' fill='white' on:click={() => clickRemove()}></rect>
   <g transform='translate({margin.left},{margin.top})'>
     {#each [group1, group2, group3] as group, k}
       {#each group as landschapstype, i}
@@ -64,7 +90,7 @@
           <text class='hoofdtype'>{landschapstype}</text>
             {#each landschapstypen[landschapstype] as subtype, j}
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-              <g on:click={() => mapSelection.set(getBSNSNCode(subtype))} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
+              <g on:click={() => click(subtype)} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
                 <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' stroke='{($mapSelection === getBSNSNCode(subtype)) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
                 <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={subtypenColors[subtype]}></rect>
                 <text y='{j+1.34}em' x='45px' style="{($mapSelection === getBSNSNCode(subtype)) ? 'font-weight:bold' : ''}">{subtype}</text>

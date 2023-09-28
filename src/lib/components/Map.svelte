@@ -1,6 +1,6 @@
 <script>
   import BackgroundMap from '$lib/components/BackgroundMap.svelte'
-  // import LoadingIcon from '$lib/components/LoadingIcon.svelte'
+  import LoadingIcon from '$lib/components/LoadingIcon.svelte'
 
   export let w;
   export let h;
@@ -21,7 +21,7 @@
 
 {#await getData}
   <pre>Loading...</pre>
-  <!-- <LoadingIcon /> -->
+  <LoadingIcon />
 {:then res}
   <BackgroundMap datajson={res} {dataKansenDreigingen} />
 {:catch error}

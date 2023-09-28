@@ -7,6 +7,7 @@
   import AlertPopup from '$lib/components/AlertPopup.svelte';
 
   import { subtypenColors, shapeOpacity, mapSelection, clickLocation } from '$lib/stores.js';
+  import { select } from 'd3';
 
   export let feature;
   export let dataKansenDreigingen
@@ -54,8 +55,16 @@
   // }
 
   function click(e, feature){
-    clickLocation.set(e.detail.latlng)
-    mapSelection.set(feature.properties.BKNSN_CODE)
+    if($mapSelection === null){
+      select('.spinner-item')
+      .style('visibility', 'visible')
+    }
+    setTimeout(() => {
+      clickLocation.set(e.detail.latlng)
+      mapSelection.set(feature.properties.BKNSN_CODE)
+      select('.spinner-item')
+        .style('visibility', 'hidden')
+    }, 1);
   }
 
 </script>

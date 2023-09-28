@@ -63,7 +63,7 @@
     position: absolute;
     visibility:visible;
     z-index: 1000;
-    background: rgba(360, 360, 360, 0.45);
+    background: rgba(360, 360, 360, 0.2);
     /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06); */
   }
   .spinner-title {

@@ -1,14 +1,14 @@
 <script>
   import { browser } from '$app/environment'
   import { LeafletMap, TileLayer, Marker } from 'svelte-leafletjs?client';
-  import * as d3 from "d3";
+  import { select } from 'd3';
   import Shape from '$lib/components/Shape.svelte'
   import { onMount } from 'svelte'
   import { leafletMap, subtypeFeatures, shapeOpacity, mapSelection, clickLocation } from '$lib/stores.js';
 
   // import "leaflet-search";
   // import "leaflet-search/dist/leaflet-search.min.css";
-  // import LoadingIcon from './LoadingIcon.svelte'
+  import LoadingIcon from './LoadingIcon.svelte'
   import * as topojson from "topojson-client";
   import * as topojsonsimplify from "topojson-simplify";
   // import 'leaflet.control.opacity';
@@ -60,9 +60,12 @@
     //   zoomLevel.set($leafletMap.getZoom())
     //   mapCenter.set($leafletMap.getCenter())
 
-    //   d3.select('.spinner-item')
-    //     .style('visibility', 'hidden')
+    // select('.spinner-item')
+    //   .style('visibility', 'hidden')
     // });
+
+    select('.spinner-item')
+      .style('visibility', 'hidden')
 
     // var searchLayer = L.layerGroup().addTo($leafletMap);
     // $leafletMap.addControl( new L.Control.Search({
@@ -112,7 +115,7 @@
     <input id='opacity_slider' value='100' type="range" min="0" max="100" on:change={onOpacityChange}>
   </span>
 
-  <!-- <LoadingIcon /> -->
+  <LoadingIcon />
 
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- <svg class='removeselectionmap' visibility={visibleRemoveSelection} on:click={clickRemove} cursor='pointer'
@@ -138,7 +141,7 @@
       {#each $subtypeFeatures as feature, i}
         <Shape {feature} {dataKansenDreigingen} />
       {/each}
-      {#if $mapSelection !== null}
+      {#if $mapSelection !== null && $clickLocation !== null}
         <Marker latLng={[$clickLocation.lat, $clickLocation.lng]}/>
       {/if}
     </LeafletMap>
