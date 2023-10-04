@@ -1,9 +1,22 @@
 <script>
 
+  import { kansOfDreiging, mapSelection } from "$lib/stores";
+
   export let w;
   export let h;
   export let categorieen;
+  export let data
 
+  function click(element){
+    kansOfDreiging.set(element)
+    const subLandschappen = []
+    data.forEach(datarow => {
+      if(datarow[element] === '1' || datarow[element] === '2'){
+        subLandschappen.push(datarow['BKNSN_code'])
+      }
+    });
+    mapSelection.set(subLandschappen)
+  }
 
 
 </script>
@@ -11,11 +24,11 @@
 {#each categorieen as categorie}
   <div class='categorie'>
     <p class='categoryname'>{categorie.name}</p>
-    <!-- <text x={w/2-5} text-anchor='middle'>{categorie.name}</text> -->
-    <div class='elements' style=''>
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class='elements'>
       {#each categorie.elements as element}
-        <div class='element' style='width:{(w/3)-1}px'>
-          <img src='./images/{categorie.name}.png' style='width:{w/7}px'/>
+        <div class='element' style='width:{(w/3)-1}px' on:click={() => click(element)}>
+          <img src='./images/{categorie.name}.png' style='width:{w/7}px' alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
         </div>
       {/each}
@@ -53,6 +66,7 @@
 
   .element{
     flex-grow: 1;
+    cursor: pointer;
   }
 
   .element-p{

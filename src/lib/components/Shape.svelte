@@ -55,13 +55,13 @@
   // }
 
   function click(e, feature){
-    if($mapSelection === null){
+    if($mapSelection.length === 0){
       select('.spinner-item')
       .style('visibility', 'visible')
     }
     setTimeout(() => {
       clickLocation.set(e.detail.latlng)
-      mapSelection.set(feature.properties.BKNSN_CODE)
+      mapSelection.set([feature.properties.BKNSN_CODE])
       select('.spinner-item')
         .style('visibility', 'hidden')
     }, 1);
@@ -76,8 +76,8 @@
     fillColor={(feature.properties.BKNSN_CODE.length > 1 && feature.properties.BKNSN_CODE !== 'Hv4' && feature.properties.BKNSN_CODE !== 'Zk7')
             ? subtypenColors[dataKansenDreigingen.filter(d => d.BKNSN_code === feature.properties.BKNSN_CODE)[0]['Sublandschap']]
             : 'none'}
-    fillOpacity={($mapSelection) 
-      ? ($mapSelection === feature.properties.BKNSN_CODE) ? $shapeOpacity+0.3 : 0.1 
+    fillOpacity={($mapSelection.length > 0) 
+      ? ($mapSelection.includes(feature.properties.BKNSN_CODE)) ? $shapeOpacity+0.3 : 0.1 
       : $shapeOpacity
     }
     color={'none'}

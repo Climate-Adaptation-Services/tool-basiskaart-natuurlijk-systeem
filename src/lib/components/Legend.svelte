@@ -59,7 +59,7 @@
       .style('visibility', 'visible')
 
     setTimeout(() => {
-      mapSelection.set(null)
+      mapSelection.set([])
       clickLocation.set(null)
       select('.spinner-item')
         .style('visibility', 'hidden')
@@ -67,12 +67,12 @@
   }
 
   function click(subtype){
-    if($mapSelection === null){
+    if($mapSelection === []){
       select('.spinner-item')
       .style('visibility', 'visible')
     }
     setTimeout(() => {
-      mapSelection.set(getBSNSNCode(subtype))
+      mapSelection.set([getBSNSNCode(subtype)])
       select('.spinner-item')
         .style('visibility', 'hidden')
     }, 1);
@@ -82,7 +82,7 @@
 
 <div class='removeselection'>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <svg cursor='pointer' class='svgremoveselection' on:click={() => clickRemove()} style='visibility:{($mapSelection) ? 'visible' : 'hidden'}'>
+  <svg cursor='pointer' class='svgremoveselection' on:click={() => clickRemove()} style='visibility:{($mapSelection.length > 0) ? 'visible' : 'hidden'}'>
     <!-- <rect width='60px' height='70px' stroke='black' fill='none'></rect> -->
     <!-- <circle cx='25' cy='25' r=20 fill='white'></circle> -->
     <path d='M20 10, L40,30, M20 30, L40 10' stroke='black' fill="black" stroke-linecap="round" stroke-width='6'></path>
@@ -101,9 +101,9 @@
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <g on:click={() => click(subtype)} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
-                <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' stroke='{($mapSelection === getBSNSNCode(subtype)) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
+                <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' stroke='{($mapSelection.includes(getBSNSNCode(subtype))) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
                 <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={subtypenColors[subtype]}></rect>
-                <text y='{j+1.34}em' x='45px' style="{($mapSelection === getBSNSNCode(subtype)) ? 'font-weight:bold' : ''}">{subtype}</text>
+                <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(getBSNSNCode(subtype))) ? 'font-weight:bold' : ''}">{subtype}</text>
               </g>
             {/each}
         </g>

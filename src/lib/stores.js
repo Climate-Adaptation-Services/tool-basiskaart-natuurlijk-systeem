@@ -4,8 +4,9 @@ export const leafletMap = writable(null)
 // export const mapBounds = writable(0);
 // export const zoomLevel = writable(0);
 // export const mapCenter = writable(0);
-export const mapSelection = writable(null);
-export const clickLocation = writable(null)
+export const mapSelection = writable([]);
+export const clickLocation = writable(null);
+export const kansOfDreiging = writable(null);
 export const subtypeFeatures = writable(null)
 export const shapeOpacity = writable(1)
 
