@@ -82,9 +82,9 @@
 
 </script>
 
-<div class='removeselection'>
+<div class='removeselection' style='visibility:{($mapSelection.length > 0) ? 'visible' : 'hidden'}'>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <svg cursor='pointer' class='svgremoveselection' on:click={() => clickRemove()} style='visibility:{($mapSelection.length > 0) ? 'visible' : 'hidden'}'>
+  <svg cursor='pointer' class='svgremoveselection' on:click={() => clickRemove()} >
     <!-- <rect width='60px' height='70px' stroke='black' fill='none'></rect> -->
     <!-- <circle cx='25' cy='25' r=20 fill='white'></circle> -->
     <path d='M20 10, L40,30, M20 30, L40 10' stroke='black' fill="black" stroke-linecap="round" stroke-width='6'></path>
@@ -135,12 +135,13 @@
 
   .removeselection{
     position:absolute;
-    right:10px;
-    top:10px;
+    right:-30px;
+    bottom:-30px;
     z-index: 10000;
     opacity:0.8;
     width:60px;
-    height:100px;
+    height:70px;
+    background-color: white;
   }
 
 </style>
