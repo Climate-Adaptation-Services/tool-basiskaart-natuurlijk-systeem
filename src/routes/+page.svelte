@@ -47,7 +47,7 @@
 			</div>
 			<div class='kansen'>
 				<h3>Adaptatiekansen</h3>
-				<div class='kansendreigingen-div' bind:clientWidth={wKansen} bind:clientHeight={hKansen}>
+				<div class='kansendreigingen-div' style='margin-left:3%' bind:clientWidth={wKansen} bind:clientHeight={hKansen}>
 					<KansenBedreigingen w={wKansen} h={hKansen} categorieen={adaptatieKansen} data={dataKansenDreigingen}/>
 				</div>
 			</div>

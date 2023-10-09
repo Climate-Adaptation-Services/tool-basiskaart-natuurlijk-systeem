@@ -53,7 +53,10 @@
     width:100%;
     display: flex;
     flex-direction:column;
-    margin-bottom: 5px;
+    margin-bottom: 1.5vh;
+    border: 1px solid steelblue;
+    padding-top:5px;
+    padding-bottom:5px;
   }
 
   .elements{
@@ -67,7 +70,15 @@
   .element{
     flex-grow: 1;
     cursor: pointer;
+    transition: all 0.3s
+
   }
+
+  .element:hover img{
+    transform: scale(1.1); /* Scale the image to 1.1 times its original size on hover */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow on hover */
+  }
+
 
   .element-p{
     font-size:11px;
