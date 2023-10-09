@@ -10,8 +10,8 @@
   export let data
 
   function click(element){
-    console.log($mapSelection === [], $kansOfDreiging === null)
-    if($mapSelection === [] && $kansOfDreiging === null){
+    console.log($mapSelection.length, $kansOfDreiging)
+    if($mapSelection.length === 0 && $kansOfDreiging === null){
       select('.spinner-item')
         .style('visibility', 'visible')
     }
