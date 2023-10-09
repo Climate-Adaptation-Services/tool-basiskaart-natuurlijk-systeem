@@ -1,6 +1,6 @@
 <script>
   import { uniq, map } from 'lodash'
-  import { subtypenColors, mapSelection, clickLocation } from '$lib/stores';
+  import { subtypenColors, mapSelection, clickLocation, kansOfDreiging } from '$lib/stores';
   import { select } from 'd3';
     import { Circle } from 'svelte-loading-spinners';
 
@@ -72,6 +72,7 @@
       .style('visibility', 'visible')
     }
     setTimeout(() => {
+      kansOfDreiging.set(null)
       mapSelection.set([getBSNSNCode(subtype)])
       select('.spinner-item')
         .style('visibility', 'hidden')

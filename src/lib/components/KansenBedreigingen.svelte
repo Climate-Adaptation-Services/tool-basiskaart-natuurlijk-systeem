@@ -1,6 +1,8 @@
 <script>
 
   import { kansOfDreiging, mapSelection } from "$lib/stores";
+  import { select } from "d3";
+  
 
   export let w;
   export let h;
@@ -8,14 +10,23 @@
   export let data
 
   function click(element){
-    kansOfDreiging.set(element)
-    const subLandschappen = []
-    data.forEach(datarow => {
-      if(datarow[element] === '1' || datarow[element] === '2'){
-        subLandschappen.push(datarow['BKNSN_code'])
-      }
-    });
-    mapSelection.set(subLandschappen)
+    console.log($mapSelection === [], $kansOfDreiging === null)
+    if($mapSelection === [] && $kansOfDreiging === null){
+      select('.spinner-item')
+        .style('visibility', 'visible')
+    }
+    setTimeout(() => {
+      kansOfDreiging.set(element)
+      const subLandschappen = []
+      data.forEach(datarow => {
+        if(datarow[element] === '1' || datarow[element] === '2'){
+          subLandschappen.push(datarow['BKNSN_code'])
+        }
+      });
+      mapSelection.set(subLandschappen)
+      select('.spinner-item')
+        .style('visibility', 'hidden')
+    }, 1);
   }
 
 
@@ -54,7 +65,9 @@
     display: flex;
     flex-direction:column;
     margin-bottom: 1.5vh;
-    border: 1px solid steelblue;
+    /* border: 1px solid steelblue; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    background-color: white;
     padding-top:5px;
     padding-bottom:5px;
   }

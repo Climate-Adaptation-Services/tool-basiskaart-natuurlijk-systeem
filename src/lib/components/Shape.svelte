@@ -6,7 +6,7 @@
   import { bind } from 'svelte-simple-modal';
   import AlertPopup from '$lib/components/AlertPopup.svelte';
 
-  import { subtypenColors, shapeOpacity, mapSelection, clickLocation } from '$lib/stores.js';
+  import { subtypenColors, shapeOpacity, mapSelection, clickLocation, kansOfDreiging } from '$lib/stores.js';
   import { select } from 'd3';
 
   export let feature;
@@ -60,6 +60,7 @@
       .style('visibility', 'visible')
     }
     setTimeout(() => {
+      kansOfDreiging.set(null)
       clickLocation.set(e.detail.latlng)
       mapSelection.set([feature.properties.BKNSN_CODE])
       select('.spinner-item')

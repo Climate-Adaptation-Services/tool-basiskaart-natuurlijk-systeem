@@ -71,6 +71,7 @@
 
 .side-panel{
 	width:55%;
+	background-color: aliceblue;
 }
 
 .map{
@@ -85,6 +86,7 @@
 .kansen-bedreigingen{
 	text-align: center;
 	height:60%;
+	padding:10px;
 }
 
 .kansendreigingen-div{
@@ -95,13 +97,13 @@
 	float:left;
 	width:49%;
 	height: 100%;
-	border-top: solid;
+	/* border-top: 1px solid; */
 	display: flex;
 	flex-direction: column;
 }
 
 .bedreigingen{
-	border-right: solid;
+	/* border-right: 1px solid; */
 }
 
 h3{
