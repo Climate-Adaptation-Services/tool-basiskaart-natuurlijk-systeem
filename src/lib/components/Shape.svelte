@@ -75,13 +75,15 @@
   <Polygon
     latLngs={flip(feature).geometry.coordinates}
     fillColor={(feature.properties.BKNSN_CODE.length > 1 && feature.properties.BKNSN_CODE !== 'Hv4' && feature.properties.BKNSN_CODE !== 'Zk7')
-            ? subtypenColors[dataKansenDreigingen.filter(d => d.BKNSN_code === feature.properties.BKNSN_CODE)[0]['Sublandschap']]
-            : 'none'}
+      ? subtypenColors[dataKansenDreigingen.filter(d => d.BKNSN_code === feature.properties.BKNSN_CODE)[0]['Sublandschap']]
+      : 'none'}
     fillOpacity={($mapSelection.length > 0) 
       ? ($mapSelection.includes(feature.properties.BKNSN_CODE)) ? $shapeOpacity+0.3 : 0.1 
-      : $shapeOpacity
-    }
-    color={'none'}
+      : $shapeOpacity}
+    color={($mapSelection.includes(feature.properties.BKNSN_CODE))
+      ? 'black'
+      : 'none'}
+    weight='0.1'
     events={['click']}
     on:click={e => click(e, feature)}
   />

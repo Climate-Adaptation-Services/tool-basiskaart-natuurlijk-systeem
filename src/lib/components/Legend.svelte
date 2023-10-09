@@ -60,6 +60,7 @@
 
     setTimeout(() => {
       mapSelection.set([])
+      kansOfDreiging.set(null)
       clickLocation.set(null)
       select('.spinner-item')
         .style('visibility', 'hidden')
