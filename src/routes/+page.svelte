@@ -85,7 +85,7 @@
 
 .kansen-bedreigingen{
 	text-align: center;
-	height:60%;
+	height:50%;
 	padding:10px;
 }
 
@@ -107,7 +107,8 @@
 }
 
 h3{
-	margin-top:5px;
+	margin-top:0px;
+	margin-bottom:2vh;
 }
 
 </style>

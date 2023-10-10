@@ -39,7 +39,7 @@
     <div class='elements'>
       {#each categorie.elements as element}
         <div class='element' style='width:{(w/3)-1}px' on:click={() => click(element)}>
-          <img src='./images/{categorie.name}.png' style='width:{w/7}px; {(element === $kansOfDreiging) ? 'transform: scale(1.1); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border:2px solid' : ""}' alt='Afbeelding van {categorie.name}'/>
+          <img src='./images/{categorie.name}.png' style='width:{w/9}px; {(element === $kansOfDreiging) ? 'transform: scale(1.1); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border:2px solid' : ""}' alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
         </div>
       {/each}
@@ -94,7 +94,7 @@
 
 
   .element-p{
-    font-size:11px;
+    font-size:1.5vh;
     margin:0 auto;
     width:100%;
   }
