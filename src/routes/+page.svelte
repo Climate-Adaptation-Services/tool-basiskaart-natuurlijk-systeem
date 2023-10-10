@@ -17,7 +17,7 @@
 	let hKansen;
 
 	const klimaatDreigingen = [
-		{'name':'Wateroverlast', 'elements':['Langdurige neerslag', 'Kortdurend', 'Rivierkwel	bodemerosie']},
+		{'name':'Wateroverlast', 'elements':['Langdurige neerslag', 'Kortdurend', 'Rivierkwel' , 'Bodemerosie']},
 		{'name':'Verdroging', 'elements':['Droogteschade landbouw', 'Verdroging extreme rivierstanden', 'Verdroging grondwaterafh. natuur', 'Natuurbrand', 'Bodemdaling veenoxidatie', 'Bodemzetting zwel &krimp', 'CO2-emissie']},
 		{'name':'Verzilting', 'elements':['Zoute en brakke kwel']}
 	]
