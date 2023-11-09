@@ -46,17 +46,6 @@ console.log(categorieen)
   </div>
 {/each}
 
-<!-- <svg class='dreigingen-svg' width={w} height={h}>
-  {#each categorieen as categorie, i}
-    <g transform='translate(0,{i*h/3+20})'>
-      <text x={w/2-5} text-anchor='middle'>{categorie.name}</text>
-      {#each categorie.elements as element}
-        <text y='1.2em'>{element}</text>
-      {/each}
-    </g>
-  {/each}
-</svg> -->
-
 
 <style>
   .categorie{
@@ -68,7 +57,7 @@ console.log(categorieen)
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     background-color: white;
     padding-top:5px;
-    padding-bottom:5px;
+    padding-bottom:3px;
   }
 
   .elements{
