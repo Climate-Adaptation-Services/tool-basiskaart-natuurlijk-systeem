@@ -79,7 +79,7 @@
 <style>
   .opacity_span{
     z-index: 2000;
-    opacity: 0.8;
+    /* opacity: 0.8; */
     background-color: white;
     position: fixed;
     width:200px;
@@ -88,6 +88,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    border-radius: 2px;
   }
 
   input[type=range]{
