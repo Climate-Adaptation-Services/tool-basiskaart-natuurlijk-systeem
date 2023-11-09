@@ -37,7 +37,7 @@ console.log(categorieen)
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class='elements'>
       {#each categorie.elements as element}
-        <div class='element' style='width:{(w/3)-1}px' on:click={() => click(element)}>
+        <div class='element' style='width:{(w/4)-1}px' on:click={() => click(element)}>
           <img src='./images/{element.replaceAll('&', '').replaceAll('/', '')}.png'style='width:{w/9}px; {(element === $kansOfDreiging) ? 'transform: scale(1.3); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border:2px solid' : ""}' alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
         </div>
