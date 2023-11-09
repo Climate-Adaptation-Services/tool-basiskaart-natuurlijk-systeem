@@ -28,8 +28,7 @@
         .style('visibility', 'hidden')
     }, 1);
   }
-
-
+console.log(categorieen)
 </script>
 
 {#each categorieen as categorie}
@@ -39,7 +38,7 @@
     <div class='elements'>
       {#each categorie.elements as element}
         <div class='element' style='width:{(w/3)-1}px' on:click={() => click(element)}>
-          <img src='./images/{categorie.name}.png' style='width:{w/9}px; {(element === $kansOfDreiging) ? 'transform: scale(1.3); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border:2px solid' : ""}' alt='Afbeelding van {categorie.name}'/>
+          <img src='./images/{element.replaceAll('&', '').replaceAll('/', '')}.png'style='width:{w/9}px; {(element === $kansOfDreiging) ? 'transform: scale(1.3); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border:2px solid' : ""}' alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
         </div>
       {/each}
