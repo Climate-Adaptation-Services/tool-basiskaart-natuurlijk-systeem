@@ -20,6 +20,7 @@
     }
     setTimeout(() => {
       kansOfDreiging.set([kansOfDreigingNameToCode(element)])
+      kansOfDreigingWithValue.set(null)
       const subLandschappen = []
       const subLandschappenWithValue = [[],[]]
       data.forEach(datarow => {
@@ -39,7 +40,6 @@
     }, 1);
   }
 
-  $: console.log($kansOfDreigingWithValue)
 </script>
 
 {#each categorieen as categorie}

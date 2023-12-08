@@ -1,6 +1,6 @@
 <script>
   import { uniq, map } from 'lodash'
-  import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue } from '$lib/stores';
+  import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue, kansOfDreigingWithValue } from '$lib/stores';
   import { select } from 'd3';
   import { Circle } from 'svelte-loading-spinners';
 
@@ -76,13 +76,20 @@
     }
     setTimeout(() => {
       const kansenEnDreigingen = []
+      const kansenEnDreigingenWithValue = [[],[]]
       const subtypeData = dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0]
       for(const key in subtypeData){
-        if(subtypeData[key] === '1' || subtypeData[key] === '2'){
+        if(subtypeData[key] === '1'){
           kansenEnDreigingen.push(key)
+          kansenEnDreigingenWithValue[0].push(key)
+        }
+        if(subtypeData[key] === '2'){
+          kansenEnDreigingen.push(key)
+          kansenEnDreigingenWithValue[1].push(key)
         } 
       }
       kansOfDreiging.set(kansenEnDreigingen)
+      kansOfDreigingWithValue.set(kansenEnDreigingenWithValue)
       mapSelection.set([getBKNSNCode(subtype)])
       select('.spinner-item')
         .style('visibility', 'hidden')
