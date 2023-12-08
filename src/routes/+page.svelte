@@ -19,7 +19,7 @@
 	let hKansen;
 
 	const klimaatDreigingen = [
-		{'name':'Wateroverlast', 'elements':['Langdurige neerslag', 'Kortdurend', 'Rivierkwel' , 'Bodemerosie']},
+		{'name':'Wateroverlast', 'elements':['Langdurige neerslag', 'Kortdurend', 'Rivierkwel' , 'Bodemerosie (water)']},
 		{'name':'Verdroging', 'elements':['Droogteschade landbouw', 'Verdroging extreme rivierstanden', 'Verdroging grondwaterafh. natuur', 'Natuurbrand', 'Bodemdaling veenoxidatie', 'Bodemzetting zwel &krimp', 'CO2-emissie']},
 		{'name':'Verzilting', 'elements':['Zoute en brakke kwel']}
 	]
@@ -28,7 +28,7 @@
 		{'name':'Vasthouden', 'elements':['Bodeminfiltratie', 'Verhogen drainagebasis', 'Verhogen org.stof bodem', 'Peilverhogen opp.- en grondwater']},
 		{'name':'Bergen', 'elements':['Inundatie land', 'Vergroten capaciteit oppervlakte-water']},
 		{'name':'Afvoeren', 'elements':['Beek- en rivierherstel', 'Stromende berging']},
-		{'name':'Landgebruik', 'elements':['Aanpassen teelten/ nat. vegetatie']}
+		{'name':'Landgebruik', 'elements':['Aanpassen teelten nat. vegetatie']}
 	]
 
 </script>
@@ -44,13 +44,13 @@
 			<div class='bedreigingen'>
 				<h3>Klimaatdreigingen</h3>
 				<div class='kansendreigingen-div' bind:clientWidth={wKansen} bind:clientHeight={hKansen}>
-					<KansenBedreigingen w={wKansen} h={hKansen} categorieen={klimaatDreigingen} data={dataKansenDreigingen}/>
+					<KansenBedreigingen w={wKansen} h={hKansen} categorieen={klimaatDreigingen} data={dataKansenDreigingen} meta={metaKansenDreigingen}/>
 				</div>
 			</div>
 			<div class='kansen'>
 				<h3>Adaptatiekansen</h3>
 				<div class='kansendreigingen-div' style='margin-left:3%' bind:clientWidth={wKansen} bind:clientHeight={hKansen}>
-					<KansenBedreigingen w={wKansen} h={hKansen} categorieen={adaptatieKansen} data={dataKansenDreigingen}/>
+					<KansenBedreigingen w={wKansen} h={hKansen} categorieen={adaptatieKansen} data={dataKansenDreigingen} meta={metaKansenDreigingen}/>
 				</div>
 			</div>
 		</div>

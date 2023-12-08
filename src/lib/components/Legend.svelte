@@ -106,7 +106,7 @@
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <g on:click={() => click(subtype)} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
                 <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' stroke='{($mapSelection.includes(getBKNSNCode(subtype))) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
-                <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => {console.log(d['Subtype_na'], subtype); return d['Subtype_na'] === subtype})[0]['kleur']}></rect>
+                <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0]['kleur']}></rect>
                 <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(getBKNSNCode(subtype))) ? 'font-weight:bold' : ''}">{subtype}</text>
               </g>
             {/each}

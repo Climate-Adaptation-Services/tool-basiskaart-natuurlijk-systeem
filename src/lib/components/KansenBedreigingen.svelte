@@ -1,16 +1,22 @@
 <script>
-
   import { kansOfDreiging, mapSelection } from "$lib/stores";
   import { select } from "d3";
   
-
   export let w;
   export let h;
   export let categorieen;
   export let data
+  export let meta
+
+  function kansOfDreigingNameToCode(name){
+    return meta.filter(d => {
+      console.log(d.effect_kans, name)
+      return d.effect_kans === name
+    })[0]['code']
+  }
 
   function click(element){
-    console.log($mapSelection.length, $kansOfDreiging)
+    const kansDreiging = kansOfDreigingNameToCode(element)
     if($mapSelection.length === 0 && $kansOfDreiging === null){
       select('.spinner-item')
         .style('visibility', 'visible')
@@ -19,7 +25,7 @@
       kansOfDreiging.set(element)
       const subLandschappen = []
       data.forEach(datarow => {
-        if(datarow[element] === '1' || datarow[element] === '2'){
+        if(datarow[kansDreiging] === '1' || datarow[kansDreiging] === '2'){
           subLandschappen.push(datarow['BKNSN_code'])
         }
       });
@@ -28,7 +34,6 @@
         .style('visibility', 'hidden')
     }, 1);
   }
-console.log(categorieen)
 </script>
 
 {#each categorieen as categorie}
