@@ -75,7 +75,14 @@
       .style('visibility', 'visible')
     }
     setTimeout(() => {
-      kansOfDreiging.set(null)
+      const kansenEnDreigingen = []
+      const subtypeData = dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0]
+      for(const key in subtypeData){
+        if(subtypeData[key] === '1' || subtypeData[key] === '2'){
+          kansenEnDreigingen.push(key)
+        } 
+      }
+      kansOfDreiging.set(kansenEnDreigingen)
       mapSelection.set([getBKNSNCode(subtype)])
       select('.spinner-item')
         .style('visibility', 'hidden')

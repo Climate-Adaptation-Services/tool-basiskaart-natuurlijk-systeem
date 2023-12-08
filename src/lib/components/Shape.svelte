@@ -61,7 +61,18 @@
       .style('visibility', 'visible')
     }
     setTimeout(() => {
-      kansOfDreiging.set(null)
+      const kansenEnDreigingen = []
+      const subtypeData = dataKansenDreigingen.filter(d => {
+        console.log(d['Subtype_na'], feature, feature['Subtype_na'])
+        return d['Subtype_na'] === feature.properties['Subtype_na']
+      })[0]
+      for(const key in subtypeData){
+        if(subtypeData[key] === '1' || subtypeData[key] === '2'){
+          kansenEnDreigingen.push(key)
+        } 
+      }
+      console.log(kansenEnDreigingen)
+      kansOfDreiging.set(kansenEnDreigingen)
       clickLocation.set(e.detail.latlng)
       mapSelection.set([feature.properties.BKNSN_code])
       select('.spinner-item')
