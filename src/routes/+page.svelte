@@ -8,8 +8,10 @@
 	export let data
 
 	const dataKansenDreigingen = data.data;
+	const metaKansenDreigingen = data.meta;
 
 	console.log(dataKansenDreigingen)
+	console.log(metaKansenDreigingen)
 
 	let wMap;
 	let hMap;

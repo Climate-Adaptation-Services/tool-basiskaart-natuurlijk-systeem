@@ -1,6 +1,6 @@
 <script>
   import { uniq, map } from 'lodash'
-  import { subtypenColors, mapSelection, clickLocation, kansOfDreiging } from '$lib/stores';
+  import { mapSelection, clickLocation, kansOfDreiging } from '$lib/stores';
   import { select } from 'd3';
     import { Circle } from 'svelte-loading-spinners';
 
@@ -12,16 +12,16 @@
   
   const landschapstypen = {
     'Strandwallen en binnenduinrand':['Strandwal', 'Strandvlakte', 'Kustduinen'],
-    'Zeekleipolders': ['Zeekleivlakte', 'Kreekrug', 'Kreekbedding', 'Terp', 'Zoetwatergetijdevlakte'],
+    'Zeekleipolders': ['Zeekleivlakte', 'Kreekrug', 'Kreekbedding', 'Terp', 'Zoetwatergetijdenafzetting', 'Zoutwatergetijdenafzetting'],
     'Laagveen': ['Laagveenvlakte', 'Petgaten'],
     'Droogmakerijen en IJsselmeerpolders': ['Meerbodem', 'Kreekrug', 'Veenrest'],
-    'Rivierengebied':['Stroomrug, oeverwal', 'Rivierkom', 'Uiterwaard', 'Overslaggronden', 'Restgeul'],
-    'Rivierterrassen': ['Rivierterras / zand', 'Rivierterras / klei', 'Rivierduin', 'Restgeul'],
-    'Stuwwallen': ['Stuwwal', 'Sandr /spoelzandvlakte of -waaier', 'Daluitspoelingswaaier', 'Droogdal', 'Es'],
-    'Keileemgebied': ['Keileemrug', 'Keileemplateau', 'Smeltwatervlakte'],
-    'Dekzandgebied': ['Dekzandrug', 'Dekzandvlakte', 'Stuifzandduin', 'Es', 'Beekdal, zand', 'Beekdal, veen', 'Depressie, zand', 'Depressie, veen', 'Laagveenvlakte'],
-    'Voormalige hoogvenen': ['Hoogveen', 'Depressie, veen', 'Dekzandrug'],
-    'Heuvelland en lossgebied': ['Lossplateau en terrassen', 'Losshelling', 'Kalkhelling', 'Beekdal', 'Droogdal', 'Rivierterras', 'Overige afzettingen']
+    'Rivierengebied':['Stroomrug oeverwal', 'Rivierkom', 'Uiterwaard', 'Overslaggronden', 'Restgeul'],
+    'Rivierterrassen': ['Rivierterras zand', 'Rivierterras klei', 'Rivierduin', 'Restgeul'],
+    'Stuwwallen': ['Stuwwal', 'Smeltwaterafzettingen sandr', 'Daluitspoelingswaaier', 'Droogdal', 'Es stuwwal'],
+    'Keileemgebied': ['Grondmorenerug', 'Grondmorene plateau -vlakte', 'Pingoruines en periglaciale laagten'],
+    'Dekzandgebied': ['Dekzandrug', 'Dekzandvlakte', 'Stuifzandduin en bijbehorende vlaktes', 'Es dekzand', 'Beekdal zand/leem', 'Beekdal veen', 'Depressie zand', 'Depressie veen', 'Laagveenvlakte'],
+    'Voormalige hoogvenen': ['Hoogveen', 'Depressie', 'Ontgonnen hoogveen'],
+    'Heuvelland en lossgebied': ['Lossplateau', 'Losshelling', 'Kalkhelling', 'Beekdal', 'Droogdal', 'Rivierterras', 'Overige afzettingen']
   }
 
   const margin = {top:30, bottom:0, left:30, right:0}
@@ -30,8 +30,10 @@
   const group2 = Object.keys(landschapstypen).slice(4,8)
   const group3 = Object.keys(landschapstypen).slice(8)
 
-  function getBSNSNCode(subtype){
-    return dataKansenDreigingen.filter(d => d['Sublandschap'] === subtype)[0]['BKNSN_code'];
+  function getBKNSNCode(subtype){
+    if(dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0] !== undefined){
+      return dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0]['BKNSN_code'];
+    }
   }
 
   function getYPosition(group, i){
@@ -74,7 +76,7 @@
     }
     setTimeout(() => {
       kansOfDreiging.set(null)
-      mapSelection.set([getBSNSNCode(subtype)])
+      mapSelection.set([getBKNSNCode(subtype)])
       select('.spinner-item')
         .style('visibility', 'hidden')
     }, 1);
@@ -103,9 +105,9 @@
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <g on:click={() => click(subtype)} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
-                <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' stroke='{($mapSelection.includes(getBSNSNCode(subtype))) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
-                <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={subtypenColors[subtype]}></rect>
-                <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(getBSNSNCode(subtype))) ? 'font-weight:bold' : ''}">{subtype}</text>
+                <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' stroke='{($mapSelection.includes(getBKNSNCode(subtype))) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
+                <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => {console.log(d['Subtype_na'], subtype); return d['Subtype_na'] === subtype})[0]['kleur']}></rect>
+                <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(getBKNSNCode(subtype))) ? 'font-weight:bold' : ''}">{subtype}</text>
               </g>
             {/each}
         </g>

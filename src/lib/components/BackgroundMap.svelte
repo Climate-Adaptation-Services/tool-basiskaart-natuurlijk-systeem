@@ -13,12 +13,23 @@
   export let datajson
   export let dataKansenDreigingen
 
-  console.log(datajson)
+  let bnsData1 = topojsonsimplify.presimplify(datajson[0])
+  bnsData1 = topojson.feature(bnsData1, bnsData1.objects['BKNSN_2023_xaaaa'])
+  let bnsData2 = topojsonsimplify.presimplify(datajson[1])
+  bnsData2 = topojson.feature(bnsData2, bnsData2.objects['BKNSN_2023_xaaab'])
+  let bnsData3 = topojsonsimplify.presimplify(datajson[2])
+  bnsData3 = topojson.feature(bnsData3, bnsData3.objects['BKNSN_2023_xaaac'])
+  let bnsData4 = topojsonsimplify.presimplify(datajson[3])
+  bnsData4 = topojson.feature(bnsData4, bnsData4.objects['BKNSN_2023_xaaad'])
+  let bnsData5 = topojsonsimplify.presimplify(datajson[4])
+  bnsData5 = topojson.feature(bnsData5, bnsData5.objects['BKNSN_2023_xaaae'])
+  let bnsData6 = topojsonsimplify.presimplify(datajson[5])
+  bnsData6 = topojson.feature(bnsData6, bnsData6.objects['BKNSN_2023_xaaaf'])
 
-  let bnsData = topojsonsimplify.presimplify(datajson[0])
-  bnsData = topojson.feature(bnsData, bnsData.objects.BKNSN_GeoJSON)
+  subtypeFeatures.set([...bnsData1.features, ...bnsData2.features, ...bnsData3.features, ...bnsData4.features, ...bnsData5.features, ...bnsData6.features])
 
-  subtypeFeatures.set(bnsData.features)
+  $: console.log($subtypeFeatures)
+  $: console.log($mapSelection)
 
   const mapOptions = {
     center: [52.2, 5.2],
@@ -47,7 +58,6 @@
   }
 
   let map_element = {top:0, right:0, left:0}
-  $: console.log(map_element)
   afterUpdate(() => {
     map_element = document.getElementsByClassName('backgroundMap')[0].getBoundingClientRect()
   })

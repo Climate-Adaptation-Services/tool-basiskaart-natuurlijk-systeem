@@ -6,7 +6,7 @@
   import { bind } from 'svelte-simple-modal';
   import AlertPopup from '$lib/components/AlertPopup.svelte';
 
-  import { subtypenColors, shapeOpacity, mapSelection, clickLocation, kansOfDreiging } from '$lib/stores.js';
+  import { shapeOpacity, mapSelection, clickLocation, kansOfDreiging } from '$lib/stores.js';
   import { select } from 'd3';
 
   export let feature;
@@ -55,6 +55,7 @@
   // }
 
   function click(e, feature){
+    console.log(feature)
     if($mapSelection.length === 0){
       select('.spinner-item')
       .style('visibility', 'visible')
@@ -62,7 +63,7 @@
     setTimeout(() => {
       kansOfDreiging.set(null)
       clickLocation.set(e.detail.latlng)
-      mapSelection.set([feature.properties.BKNSN_CODE])
+      mapSelection.set([feature.properties.BKNSN_code])
       select('.spinner-item')
         .style('visibility', 'hidden')
     }, 1);
@@ -74,13 +75,13 @@
 <!-- && tableSelected && feature.geometry !== null} -->
   <Polygon
     latLngs={flip(feature).geometry.coordinates}
-    fillColor={(feature.properties.BKNSN_CODE.length > 1 && feature.properties.BKNSN_CODE !== 'Hv4' && feature.properties.BKNSN_CODE !== 'Zk7')
-      ? subtypenColors[dataKansenDreigingen.filter(d => d.BKNSN_code === feature.properties.BKNSN_CODE)[0]['Sublandschap']]
+    fillColor={(feature.properties.BKNSN_code.length > 1)
+      ? dataKansenDreigingen.filter(d => d.BKNSN_code === feature.properties.BKNSN_code)[0]['kleur']
       : 'none'}
     fillOpacity={($mapSelection.length > 0) 
-      ? ($mapSelection.includes(feature.properties.BKNSN_CODE)) ? $shapeOpacity+0.3 : 0.1 
+      ? ($mapSelection.includes(feature.properties.BKNSN_code)) ? $shapeOpacity+0.3 : 0.1 
       : $shapeOpacity}
-    color={($mapSelection.includes(feature.properties.BKNSN_CODE))
+    color={($mapSelection.includes(feature.properties.BKNSN_code))
       ? 'black'
       : 'none'}
     weight='0.1'
