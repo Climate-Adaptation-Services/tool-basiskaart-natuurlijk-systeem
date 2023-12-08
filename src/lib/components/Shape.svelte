@@ -6,7 +6,7 @@
   import { bind } from 'svelte-simple-modal';
   import AlertPopup from '$lib/components/AlertPopup.svelte';
 
-  import { shapeOpacity, mapSelection, clickLocation, kansOfDreiging } from '$lib/stores.js';
+  import { shapeOpacity, mapSelection, clickLocation, kansOfDreiging, kansOfDreigingWithValue } from '$lib/stores.js';
   import { select } from 'd3';
 
   export let feature;
@@ -62,17 +62,20 @@
     }
     setTimeout(() => {
       const kansenEnDreigingen = []
-      const subtypeData = dataKansenDreigingen.filter(d => {
-        console.log(d['Subtype_na'], feature, feature['Subtype_na'])
-        return d['Subtype_na'] === feature.properties['Subtype_na']
-      })[0]
+      const kansenEnDreigingenWithValue = [[],[]]
+      const subtypeData = dataKansenDreigingen.filter(d => d['Subtype_na'] === feature.properties['Subtype_na'])[0]
       for(const key in subtypeData){
-        if(subtypeData[key] === '1' || subtypeData[key] === '2'){
+        if(subtypeData[key] === '1'){
           kansenEnDreigingen.push(key)
+          kansenEnDreigingenWithValue[0].push(key)
+        }
+        if(subtypeData[key] === '2'){
+          kansenEnDreigingen.push(key)
+          kansenEnDreigingenWithValue[1].push(key)
         } 
       }
-      console.log(kansenEnDreigingen)
       kansOfDreiging.set(kansenEnDreigingen)
+      kansOfDreigingWithValue.set(kansenEnDreigingenWithValue)
       clickLocation.set(e.detail.latlng)
       mapSelection.set([feature.properties.BKNSN_code])
       select('.spinner-item')

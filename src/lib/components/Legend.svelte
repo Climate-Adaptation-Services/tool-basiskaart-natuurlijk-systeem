@@ -1,8 +1,8 @@
 <script>
   import { uniq, map } from 'lodash'
-  import { mapSelection, clickLocation, kansOfDreiging } from '$lib/stores';
+  import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue } from '$lib/stores';
   import { select } from 'd3';
-    import { Circle } from 'svelte-loading-spinners';
+  import { Circle } from 'svelte-loading-spinners';
 
   export let legendWidth;
   export let legendHeight;
@@ -112,7 +112,9 @@
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <g on:click={() => click(subtype)} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
-                <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' stroke='{($mapSelection.includes(getBKNSNCode(subtype))) ? 'red' : 'none'}' stroke-width='3' opacity='0.3'></rect>
+                <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' 
+                  stroke='{($mapSelection.includes(getBKNSNCode(subtype))) ? 'red' : 'none'}' stroke-width='3' opacity='0.3' stroke-dasharray={$mapSelectionWithValue[1].includes(getBKNSNCode(subtype)) ? "4" : "none"}>
+                </rect>
                 <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0]['kleur']}></rect>
                 <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(getBKNSNCode(subtype))) ? 'font-weight:bold' : ''}">{subtype}</text>
               </g>

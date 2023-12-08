@@ -1,5 +1,5 @@
 <script>
-  import { kansOfDreiging, mapSelection } from "$lib/stores";
+  import { kansOfDreiging, kansOfDreigingWithValue, mapSelection, mapSelectionWithValue } from "$lib/stores";
   import { select } from "d3";
   
   export let w;
@@ -21,16 +21,25 @@
     setTimeout(() => {
       kansOfDreiging.set([kansOfDreigingNameToCode(element)])
       const subLandschappen = []
+      const subLandschappenWithValue = [[],[]]
       data.forEach(datarow => {
-        if(datarow[kansDreiging] === '1' || datarow[kansDreiging] === '2'){
+        if(datarow[kansDreiging] === '1'){
+          subLandschappenWithValue[0].push(datarow['BKNSN_code'])
+          subLandschappen.push(datarow['BKNSN_code'])
+        }
+        else if(datarow[kansDreiging] === '2'){
+          subLandschappenWithValue[1].push(datarow['BKNSN_code'])
           subLandschappen.push(datarow['BKNSN_code'])
         }
       });
       mapSelection.set(subLandschappen)
+      mapSelectionWithValue.set(subLandschappenWithValue)
       select('.spinner-item')
         .style('visibility', 'hidden')
     }, 1);
   }
+
+  $: console.log($kansOfDreigingWithValue)
 </script>
 
 {#each categorieen as categorie}
@@ -41,7 +50,9 @@
       {#each categorie.elements as element}
         <div class='element' style='width:{(w/4)-1}px' on:click={() => click(element)}>
           <img src='./images/{element.replaceAll('&', '').replaceAll('/', '')}.png'
-          style='width:{w/9}px; {($kansOfDreiging && $kansOfDreiging.includes(kansOfDreigingNameToCode(element))) ? 'transform: scale(1.3); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border:2px solid' : ""}' 
+          style='width:{w/9}px; 
+            {($kansOfDreiging && $kansOfDreiging.includes(kansOfDreigingNameToCode(element))) ? 'transform: scale(1.3); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border:2px solid;' : ""} 
+            {($kansOfDreiging && $kansOfDreigingWithValue[1].includes(kansOfDreigingNameToCode(element))) ? 'border-style: dashed' : ''}' 
           alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
         </div>
