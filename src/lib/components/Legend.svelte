@@ -57,7 +57,7 @@
       {name:'Droogdal', code:'Sw4'},
       {name:'Droogdal met veen', code:'Sw4v'},
       {name:'Droogdal met keileem', code:'Sw4x'},
-      {name:'Es stuwwal', code:'Sw5'}
+      {name:'Es', code:'Sw5'}
     ],
     'Keileemgebied': [
       {name:'Grondmorenerug', code:'Kl1'},
@@ -68,7 +68,7 @@
       {name:'Dekzandrug', code:'Dz1'},
       {name:'Dekzandvlakte', code:'Dz2'},
       {name:'Stuifzandduin en bijbehorende vlaktes', code:'Dz3'},
-      {name:'Es dekzand', code:'Dz4'},
+      {name:'Es', code:'Dz4'},
       {name:'Beekdal zand/leem', code:'Dz5'},
       {name:'Beekdal veen', code:'Dz6'},
       {name:'Depressie zand', code:'Dz7'},
