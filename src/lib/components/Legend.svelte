@@ -188,7 +188,7 @@
                   fill='{($mapSelection.includes(subtype.code)) 
                     ? ($mapSelectionWithValue[1].includes(subtype.code)) 
                       ? '#FFF4E5'
-                      : '#FFE0B1'
+                      : '#FFD9A2'
                     : 'white'}'>
                 </rect>
                 <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => d['BKNSN_code'] === subtype.code)[0]['kleur']}></rect>

@@ -51,8 +51,8 @@
         <div class='element' style='width:{(w/4)-1}px;
           {($kansOfDreiging && $kansOfDreiging.includes(kansOfDreigingNameToCode(element))) 
             ? ($kansOfDreigingWithValue && $kansOfDreigingWithValue[1].includes(kansOfDreigingNameToCode(element)))
-              ? 'background-color:#FFE0B1' 
-              : 'background-color:#FFF4E5'
+              ? 'background-color:#FFF4E5'
+              : 'background-color:#FFE0B1'
             : ""} '
           on:click={() => click(element)}>
           <img src='./images/{element.replaceAll('&', '').replaceAll('/', '')}.png'
