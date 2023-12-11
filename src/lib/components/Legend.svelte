@@ -257,7 +257,7 @@
     background-color: #FFF4E5;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     font-size: 16px;
-    width:600px;
+    width:750px;
     padding:20px 40px 20px 40px;
     z-index: 1000;
   }

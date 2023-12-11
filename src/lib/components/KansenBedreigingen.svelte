@@ -1,7 +1,7 @@
 <script>
   import { kansOfDreiging, kansOfDreigingWithValue, mapSelection, mapSelectionWithValue } from "$lib/stores";
   import { select } from "d3";
-  import { kanstext } from '$lib/noncomponents/kansendreigingenInfo.js'
+  import { kansdreigingInfo } from '$lib/noncomponents/kansendreigingenInfo.js'
 
   export let w;
   export let h;
@@ -44,15 +44,15 @@
   function infoMouseOver(e, element){
     console.log('ello')
     select('.legend-text')
-      .html(kanstext)
+      .html(kansdreigingInfo[element])
 
     select('.legend-title')
       .html(element)
 
     select('.legend-tooltip')
       .style('visibility', 'visible')
-      .style('left', 10 + e.clientX + 'px')
-      .style('top', 10 + e.clientY + 'px')
+      .style('left', 15 + e.clientX + 'px')
+      .style('top', -150 + e.clientY + 'px')
   }
 
   function infoMouseOut(){
