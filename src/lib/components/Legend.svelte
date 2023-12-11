@@ -11,30 +11,91 @@
   // const subtypen = uniq(map(dataKansenDreigingen, 'Sublandschap'))
   
   const landschapstypen = {
-    'Strandwallen en binnenduinrand':['Strandwal', 'Strandvlakte', 'Kustduinen'],
-    'Zeekleipolders': ['Zeekleivlakte', 'Kreekrug', 'Kreekbedding', 'Terp', 'Zoetwatergetijdenafzetting', 'Zoutwatergetijdenafzetting'],
-    'Laagveen': ['Laagveenvlakte', 'Petgaten'],
-    'Droogmakerijen en IJsselmeerpolders': ['Meerbodem', 'Kreekrug', 'Veenrest'],
-    'Rivierengebied':['Stroomrug oeverwal', 'Rivierkom', 'Uiterwaard', 'Overslaggronden', 'Restgeul'],
-    'Rivierterrassen': ['Rivierterras zand', 'Rivierterras klei', 'Rivierduin', 'Restgeul'],
-    'Stuwwallen': ['Stuwwal', 'Smeltwaterafzettingen sandr', 'Daluitspoelingswaaier', 'Droogdal', 'Es stuwwal'],
-    'Keileemgebied': ['Grondmorenerug', 'Grondmorene plateau -vlakte', 'Pingoruines en periglaciale laagten'],
-    'Dekzandgebied': ['Dekzandrug', 'Dekzandvlakte', 'Stuifzandduin en bijbehorende vlaktes', 'Es dekzand', 'Beekdal zand/leem', 'Beekdal veen', 'Depressie zand', 'Depressie veen', 'Laagveenvlakte'],
-    'Voormalige hoogvenen': ['Hoogveen', 'Depressie', 'Ontgonnen hoogveen'],
-    'Heuvelland en lossgebied': ['Lossplateau', 'Losshelling', 'Kalkhelling', 'Beekdal', 'Droogdal', 'Rivierterras', 'Overige afzettingen']
+    'Strandwallen en binnenduinrand':[
+      {name:'Strandwal', code:'Bd1'}, 
+      {name:'Strandvlakte', code:'Bd2'},
+      {name:'Kustduinen', code:'Bd3'}
+    ],
+    'Zeekleipolders': [
+      {name:'Zeekleivlakte', code:'Zk2'},
+      {name:'Kreekrug', code:'Zk3'},
+      {name:'Kreekbedding', code:'Zk4'},
+      {name:'Zoetwatergetijdenafzetting', code:'Zk6'},
+      {name:'Zoutwatergetijdenafzetting', code:'Zk7'}
+    ],
+    'Laagveen': [
+      {name:'Laagveenvlakte', code:'Lv1'},
+      {name:'Petgaten', code:'Lv2'}
+    ],
+    'Droogmakerijen en IJsselmeerpolders': [
+      {name:'Meerbodem', code:'Dr1'},
+      {name:'Kreekrug', code:'Dr2'},
+      {name:'Veenrest', code:'Dr3'}
+    ],
+    'Overig': [
+      {name:'Terp', code:'At'},
+      {name:'Antropogeen element', code:'A'},
+      {name:'Water', code:'W'}
+    ],
+    'Rivierengebied':[
+      {name:'Stroomrug oeverwal', code:'Rg1'},
+      {name:'Rivierkom', code:'Rg2'},
+      {name:'Uiterwaard', code:'Rg3'},
+      {name:'Overslaggronden', code:'Rg4'},
+      {name:'Restgeul', code:'Rg5'}
+    ],
+    'Rivierterrassen': [
+      {name:'Rivierterras zand', code:'Rt1'},
+      {name:'Rivierterras klei', code:'Rt2'},
+      {name:'Rivierduin', code:'Rt3'},
+      {name:'Restgeul', code:'Rt4'}
+    ],
+    'Stuwwallen': [
+      {name:'Stuwwal', code:'Sw1'},
+      {name:'Smeltwaterafzettingen sandr', code:'Sw2'},
+      {name:'Daluitspoelingswaaier', code:'Sw3'},
+      {name:'Droogdal', code:'Sw4'},
+      {name:'Droogdal met veen', code:'Sw4v'},
+      {name:'Droogdal met keileem', code:'Sw4x'},
+      {name:'Es stuwwal', code:'Sw5'}
+    ],
+    'Keileemgebied': [
+      {name:'Grondmorenerug', code:'Kl1'},
+      {name:'Grondmorene plateau -vlakte', code:'Kl2'},
+      {name:'Pingoruines en periglaciale laagten', code:'Kl3'}
+    ],
+    'Dekzandgebied': [
+      {name:'Dekzandrug', code:'Dz1'},
+      {name:'Dekzandvlakte', code:'Dz2'},
+      {name:'Stuifzandduin en bijbehorende vlaktes', code:'Dz3'},
+      {name:'Es dekzand', code:'Dz4'},
+      {name:'Beekdal zand/leem', code:'Dz5'},
+      {name:'Beekdal veen', code:'Dz6'},
+      {name:'Depressie zand', code:'Dz7'},
+      {name:'Depressie veen', code:'Dz8'},
+      {name:'Laagveenvlakte', code:'Dz9'}
+    ],
+    'Voormalige hoogvenen': [
+      {name:'Hoogveen', code:'Hv1'},
+      {name:'Depressie', code:'Hv3'},
+      {name:'Ontgonnen hoogveen', code:'Hv2'}
+    ],
+    'Heuvelland en lossgebied': [
+      {name:'Lossplateau', code:'Lg1'},
+      {name:'Losshelling', code:'Lg2'},
+      {name:'Kalkhelling', code:'Lg3'},
+      {name:'Beekdal', code:'Lg5'},
+      {name:'Droogdal', code:'Lg6'},
+      {name:'Rivierterras', code:'Lg7'},
+      {name:'Overige afzettingen', code:'Lg8'}
+    ]
   }
 
-  const margin = {top:30, bottom:0, left:30, right:0}
+  const margin = {top:10, bottom:0, left:30, right:0}
 
-  const group1 = Object.keys(landschapstypen).slice(0,4)
-  const group2 = Object.keys(landschapstypen).slice(4,8)
-  const group3 = Object.keys(landschapstypen).slice(8)
-
-  function getBKNSNCode(subtype){
-    if(dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0] !== undefined){
-      return dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0]['BKNSN_code'];
-    }
-  }
+  const group1 = Object.keys(landschapstypen).slice(0,5)
+  const group2 = Object.keys(landschapstypen).slice(5,9)
+  const group3 = Object.keys(landschapstypen).slice(9)
 
   function getYPosition(group, i){
     let yPos = 0
@@ -44,16 +105,20 @@
     return yPos*14 + i*35
   }
 
-  const createClassName = (subtype) => subtype.replaceAll('/','').replaceAll(' ','').replaceAll('-','').replaceAll(',','')
+  const createClassName = (subtypeNaam) => subtypeNaam.replaceAll('/','').replaceAll(' ','').replaceAll('-','').replaceAll(',','')
 
   function mouseover(subtype, i, j){
-    select('.rect-' + createClassName(subtype) + '-' + i + '-' + j)
-      .style('fill', 'steelblue')
+    if(!$mapSelection.includes(subtype.code)){
+      select('.rect-' + createClassName(subtype.name) + '-' + i + '-' + j)
+      .attr('fill', '#e3eefc')
+    }
   }
 
   function mouseout(subtype, i, j){
-    select('.rect-' + createClassName(subtype) + '-' + i + '-' + j)
-    .style('fill', 'white')
+    if(!$mapSelection.includes(subtype.code)){
+      select('.rect-' + createClassName(subtype.name) + '-' + i + '-' + j)
+      .attr('fill', 'white')
+    }
   }
 
   function clickRemove(){
@@ -77,7 +142,7 @@
     setTimeout(() => {
       const kansenEnDreigingen = []
       const kansenEnDreigingenWithValue = [[],[]]
-      const subtypeData = dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0]
+      const subtypeData = dataKansenDreigingen.filter(d => d['BKNSN_code'] === subtype.code)[0]
       for(const key in subtypeData){
         if(subtypeData[key] === '1'){
           kansenEnDreigingen.push(key)
@@ -90,7 +155,7 @@
       }
       kansOfDreiging.set(kansenEnDreigingen)
       kansOfDreigingWithValue.set(kansenEnDreigingenWithValue)
-      mapSelection.set([getBKNSNCode(subtype)])
+      mapSelection.set([subtype.code])
       select('.spinner-item')
         .style('visibility', 'hidden')
     }, 1);
@@ -119,11 +184,15 @@
               <!-- svelte-ignore a11y-mouse-events-have-key-events -->
               <!-- svelte-ignore a11y-click-events-have-key-events -->
               <g on:click={() => click(subtype)} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
-                <rect class='rect-{createClassName(subtype)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em' fill='white' 
-                  stroke='{($mapSelection.includes(getBKNSNCode(subtype))) ? 'red' : 'none'}' stroke-width='3' opacity='0.3' stroke-dasharray={$mapSelectionWithValue[1].includes(getBKNSNCode(subtype)) ? "4" : "none"}>
+                <rect class='rect-{createClassName(subtype.name)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em'
+                  fill='{($mapSelection.includes(subtype.code)) 
+                    ? ($mapSelectionWithValue[1].includes(subtype.code)) 
+                      ? '#FFF4E5'
+                      : '#FFE0B1'
+                    : 'white'}'>
                 </rect>
-                <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => d['Subtype_na'] === subtype)[0]['kleur']}></rect>
-                <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(getBKNSNCode(subtype))) ? 'font-weight:bold' : ''}">{subtype}</text>
+                <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => d['BKNSN_code'] === subtype.code)[0]['kleur']}></rect>
+                <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(subtype.code)) ? 'font-weight:bold' : ''}">{subtype.name}</text>
               </g>
             {/each}
         </g>

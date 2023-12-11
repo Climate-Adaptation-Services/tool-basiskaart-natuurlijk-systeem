@@ -48,12 +48,15 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class='elements'>
       {#each categorie.elements as element}
-        <div class='element' style='width:{(w/4)-1}px' on:click={() => click(element)}>
+        <div class='element' style='width:{(w/4)-1}px;
+          {($kansOfDreiging && $kansOfDreiging.includes(kansOfDreigingNameToCode(element))) 
+            ? ($kansOfDreigingWithValue && $kansOfDreigingWithValue[1].includes(kansOfDreigingNameToCode(element)))
+              ? 'background-color:#FFE0B1' 
+              : 'background-color:#FFF4E5'
+            : ""} '
+          on:click={() => click(element)}>
           <img src='./images/{element.replaceAll('&', '').replaceAll('/', '')}.png'
-          style='width:{w/9}px; 
-            {($kansOfDreiging && $kansOfDreiging.includes(kansOfDreigingNameToCode(element))) ? 'transform: scale(1.3); box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); border:2px solid;' : ""} 
-            {($kansOfDreiging && $kansOfDreigingWithValue[1].includes(kansOfDreigingNameToCode(element))) ? 'border-style: dashed' : ''}' 
-          alt='Afbeelding van {categorie.name}'/>
+          style='width:{w/9}px' alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
         </div>
       {/each}
@@ -87,12 +90,21 @@
     flex-grow: 1;
     cursor: pointer;
     transition: all 0.3s
+  }
 
+  img{
+    transition: all 0.3s
+  }
+
+  .element:hover{
+    /* transform: scale(1.1); */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
+    background-color:blanchedalmond;
   }
 
   .element:hover img{
-    transform: scale(1.3);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    transform: scale(1.1);
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
   }
 
 
