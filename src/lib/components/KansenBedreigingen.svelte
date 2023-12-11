@@ -1,7 +1,8 @@
 <script>
   import { kansOfDreiging, kansOfDreigingWithValue, mapSelection, mapSelectionWithValue } from "$lib/stores";
   import { select } from "d3";
-  
+  import { kanstext } from '$lib/noncomponents/kansendreigingenInfo.js'
+
   export let w;
   export let h;
   export let categorieen;
@@ -40,6 +41,24 @@
     }, 1);
   }
 
+  function infoMouseOver(e, element){
+    console.log('ello')
+    select('.legend-text')
+      .html(kanstext)
+
+    select('.legend-title')
+      .html(element)
+
+    select('.legend-tooltip')
+      .style('visibility', 'visible')
+      .style('left', 10 + e.clientX + 'px')
+      .style('top', 10 + e.clientY + 'px')
+  }
+
+  function infoMouseOut(){
+    select('.legend-tooltip').style('visibility', 'hidden')
+  }
+
 </script>
 
 {#each categorieen as categorie}
@@ -55,6 +74,7 @@
               : 'background-color:#FFE0B1'
             : ""} '
           on:click={() => click(element)}>
+          <img class='kansimg' src='./images/info.png' width='18px' x='-23' y='-14' style='opacity:0.7' on:mouseover={(e) => infoMouseOver(e, element)} on:mouseout={(e) => infoMouseOut()}/>
           <img src='./images/{element.replaceAll('&', '').replaceAll('/', '')}.png'
           style='width:{w/11}px' alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
@@ -114,10 +134,19 @@
     width:100%;
   }
 
-
   .categoryname{
     margin:0;
     color:#8E8883;
+  }
+
+  .legend-tooltip{
+    position: fixed;
+    background-color: #FFF4E5;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    font-size: 16px;
+    width:600px;
+    padding:20px 40px 20px 40px;
+    z-index: 1000;
   }
 
 </style>
