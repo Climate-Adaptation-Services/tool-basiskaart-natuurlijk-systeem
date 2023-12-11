@@ -67,7 +67,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class='elements'>
       {#each categorie.elements as element}
-        <div class='element' style='width:{(w/4)-1}px;height:100%;
+        <div class='element' style='width:{(w/4)-1}px;
           {($kansOfDreiging && $kansOfDreiging.includes(kansOfDreigingNameToCode(element))) 
             ? ($kansOfDreigingWithValue && $kansOfDreigingWithValue[1].includes(kansOfDreigingNameToCode(element)))
               ? 'background-color:#FFF4E5'
@@ -102,14 +102,17 @@
     justify-content: space-evenly;
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
-
+    align-items: stretch;
   }
 
   .element{
     flex-grow: 1;
     cursor: pointer;
-    transition: all 0.3s
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
   img{
@@ -123,7 +126,7 @@
   }
 
   .element:hover img{
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
     /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); */
   }
 
@@ -148,5 +151,11 @@
     padding:20px 40px 20px 40px;
     z-index: 1000;
   }
+
+  .kansimg{
+    position:absolute;
+    transform: translate(-30px, -13px);
+  }
+
 
 </style>
