@@ -63,7 +63,7 @@
     setTimeout(() => {
       const kansenEnDreigingen = []
       const kansenEnDreigingenWithValue = [[],[]]
-      const subtypeData = dataKansenDreigingen.filter(d => d['Subtype_na'] === feature.properties['Subtype_na'])[0]
+      const subtypeData = dataKansenDreigingen.filter(d => d['BKNSN_code'] === feature.properties['BKNSN_code'])[0]
       for(const key in subtypeData){
         if(subtypeData[key] === '1'){
           kansenEnDreigingen.push(key)
