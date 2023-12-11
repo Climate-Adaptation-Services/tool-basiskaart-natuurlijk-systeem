@@ -3,7 +3,7 @@
   import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue, kansOfDreigingWithValue } from '$lib/stores';
   import { select } from 'd3';
   import { Circle } from 'svelte-loading-spinners';
-  import { legendText } from '$lib/noncomponents/landschapstypeInfo.js'
+  import { landschapsInfo } from '$lib/noncomponents/landschapstypeInfo.js'
 
   export let legendWidth;
   export let legendHeight;
@@ -164,7 +164,7 @@
 
   function infoMouseOver(e, landschapstype){
     select('.legend-text')
-      .html(legendText)
+      .html(landschapsInfo[landschapstype])
 
     select('.legend-title')
       .html(landschapstype)
@@ -259,7 +259,7 @@
     font-size: 16px;
     width:750px;
     padding:20px 40px 20px 40px;
-    z-index: 1000;
+    z-index: 100000;
   }
 
 </style>
