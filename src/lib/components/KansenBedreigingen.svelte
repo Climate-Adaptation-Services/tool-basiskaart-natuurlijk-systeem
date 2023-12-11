@@ -48,7 +48,7 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class='elements'>
       {#each categorie.elements as element}
-        <div class='element' style='width:{(w/4)-1}px;
+        <div class='element' style='width:{(w/4)-1}px;height:100%;
           {($kansOfDreiging && $kansOfDreiging.includes(kansOfDreigingNameToCode(element))) 
             ? ($kansOfDreigingWithValue && $kansOfDreigingWithValue[1].includes(kansOfDreigingNameToCode(element)))
               ? 'background-color:#FFF4E5'
@@ -56,7 +56,7 @@
             : ""} '
           on:click={() => click(element)}>
           <img src='./images/{element.replaceAll('&', '').replaceAll('/', '')}.png'
-          style='width:{w/9}px' alt='Afbeelding van {categorie.name}'/>
+          style='width:{w/11}px' alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
         </div>
       {/each}
