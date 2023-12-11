@@ -3,6 +3,7 @@
   import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue, kansOfDreigingWithValue } from '$lib/stores';
   import { select } from 'd3';
   import { Circle } from 'svelte-loading-spinners';
+  import { legendText } from '$lib/noncomponents/landschapstypeInfo.js'
 
   export let legendWidth;
   export let legendHeight;
@@ -91,7 +92,7 @@
     ]
   }
 
-  const margin = {top:10, bottom:0, left:30, right:0}
+  const margin = {top:20, bottom:0, left:30, right:0}
 
   const group1 = Object.keys(landschapstypen).slice(0,5)
   const group2 = Object.keys(landschapstypen).slice(5,9)
@@ -161,6 +162,23 @@
     }, 1);
   }
 
+  function infoMouseOver(e, landschapstype){
+    select('.legend-text')
+      .html(legendText)
+
+    select('.legend-title')
+      .html(landschapstype)
+
+    select('.legend-tooltip')
+      .style('visibility', 'visible')
+      .style('left', 10 + e.clientX + 'px')
+      .style('top', 10 + e.clientY + 'px')
+  }
+
+  function infoMouseOut(){
+    select('.legend-tooltip').style('visibility', 'hidden')
+  }
+
 </script>
 
 <div class='removeselection' style='visibility:{($mapSelection.length > 0) ? 'visible' : 'hidden'}'>
@@ -173,6 +191,10 @@
     <text x='30' y='65' fill='darkred' text-anchor='middle'>selectie</text>
   </svg>
 </div>
+<div class='legend-tooltip' style='visibility: hidden;'>
+  <h4 class='legend-title'></h4>
+  <p class='legend-text'></p>
+</div>
 <svg class='svg-legend' viewBox="0 0 900 400" preserveAspectRatio="xMidYMid meet">
   <rect width='100%' height='100%' fill='white' on:click={() => clickRemove()}></rect>
   <g transform='translate({margin.left},{margin.top})'>
@@ -180,29 +202,27 @@
       {#each group as landschapstype, i}
         <g transform='translate({k*300},{getYPosition(group, i)})'>
           <text class='hoofdtype'>{landschapstype}</text>
-            {#each landschapstypen[landschapstype] as subtype, j}
-              <!-- svelte-ignore a11y-mouse-events-have-key-events -->
-              <!-- svelte-ignore a11y-click-events-have-key-events -->
-              <g on:click={() => click(subtype)} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
-                <rect class='rect-{createClassName(subtype.name)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em'
-                  fill='{($mapSelection.includes(subtype.code)) 
-                    ? ($mapSelectionWithValue[1].includes(subtype.code)) 
-                      ? '#FFF4E5'
-                      : '#FFD9A2'
-                    : 'white'}'>
-                </rect>
-                <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => d['BKNSN_code'] === subtype.code)[0]['kleur']}></rect>
-                <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(subtype.code)) ? 'font-weight:bold' : ''}">{subtype.name}</text>
-              </g>
-            {/each}
+          <image href='/images/info.png' width='18px' x='-23' y='-14' opacity='0.7' on:mouseover={(e) => infoMouseOver(e, landschapstype)} on:mouseout={(e) => infoMouseOut()}/>
+          {#each landschapstypen[landschapstype] as subtype, j}
+            <!-- svelte-ignore a11y-mouse-events-have-key-events -->
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <g on:click={() => click(subtype)} cursor='pointer' on:mouseover={() => mouseover(subtype,i,j)} on:mouseout={() => mouseout(subtype,i,j)}>
+              <rect class='rect-{createClassName(subtype.name)}-{i}-{j}' height='1em' width='250px' x=0 y='{j+0.5}em'
+                fill='{($mapSelection.includes(subtype.code)) 
+                  ? ($mapSelectionWithValue[1].includes(subtype.code)) 
+                    ? '#FFF4E5'
+                    : '#FFD9A2'
+                  : 'white'}'>
+              </rect>
+              <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => d['BKNSN_code'] === subtype.code)[0]['kleur']}></rect>
+              <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(subtype.code)) ? 'font-weight:bold' : ''}">{subtype.name}</text>
+            </g>
+          {/each}
         </g>
       {/each}
     {/each}
   </g>
 </svg>
-
-<!-- on:mouseout={() => mapSelection.set(null)}> -->
-
 
 <style>
   .svg-legend{
@@ -218,6 +238,7 @@
   .hoofdtype{
     font-size: 14px;
     font-weight: bold;
+    color:#635F5D
   }
 
   .removeselection{
@@ -229,6 +250,16 @@
     width:60px;
     height:70px;
     background-color: white;
+  }
+
+  .legend-tooltip{
+    position: fixed;
+    background-color: #FFF4E5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    width:600px;
+    padding:20px 40px 20px 40px;
+    z-index: 1000;
   }
 
 </style>

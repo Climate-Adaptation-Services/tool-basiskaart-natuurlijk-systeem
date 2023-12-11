@@ -44,7 +44,7 @@
 
 {#each categorieen as categorie}
   <div class='categorie'>
-    <p class='categoryname'>{categorie.name}</p>
+    <p class='categoryname'><strong>{categorie.name}</strong></p>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class='elements'>
       {#each categorie.elements as element}
@@ -70,7 +70,7 @@
     width:100%;
     display: flex;
     flex-direction:column;
-    margin-bottom: 1.5vh;
+    margin-bottom: 1vh;
     /* border: 1px solid steelblue; */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     background-color: white;
@@ -117,6 +117,7 @@
 
   .categoryname{
     margin:0;
+    color:#8E8883;
   }
 
 </style>

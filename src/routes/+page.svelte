@@ -20,7 +20,7 @@
 
 	const klimaatDreigingen = [
 		{'name':'Wateroverlast', 'elements':['Langdurige neerslag', 'Kortdurend', 'Rivierkwel' , 'Bodemerosie (water)']},
-		{'name':'Verdroging', 'elements':['Droogteschade landbouw', 'Verdroging extreme rivierstanden', 'Verdroging grondwaterafh. natuur', 'Natuurbrand', 'Bodemdaling veenoxidatie', 'Bodemzetting zwel &krimp', 'CO2-emissie']},
+		{'name':'Verdroging', 'elements':['Droogteschade landbouw', 'Verdroging extreme rivierstanden', 'Verdroging grondwaterafh. natuur', 'Natuurbrand', 'Bodemdaling veenoxidatie', 'Bodemzetting zwel &krimp', 'CO2-emissie', 'Bodemerosie (wind)']},
 		{'name':'Verzilting', 'elements':['Zoute en brakke kwel']}
 	]
 
@@ -110,7 +110,8 @@
 
 h3{
 	margin-top:0px;
-	margin-bottom:2vh;
+	margin-bottom:1vh;
+	color:#635F5D;
 }
 
 </style>
