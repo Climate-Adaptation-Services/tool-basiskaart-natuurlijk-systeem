@@ -74,7 +74,7 @@
               : 'background-color:#FFE0B1'
             : ""} '
           on:click={() => click(element)}>
-          <img class='kansimg' src='./images/info.png' width='18px' x='-23' y='-14' style='opacity:0.7' on:mouseover={(e) => infoMouseOver(e, element)} on:mouseout={(e) => infoMouseOut()}/>
+          <img class='kansimg' src='./images/info.png' width='15px' x='-23' y='-14' style='opacity:0.7' on:mouseover={(e) => infoMouseOver(e, element)} on:mouseout={(e) => infoMouseOut()}/>
           <img src='./images/{element.replaceAll('&', '').replaceAll('/', '')}.png'
           style='width:{w/11}px' alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
