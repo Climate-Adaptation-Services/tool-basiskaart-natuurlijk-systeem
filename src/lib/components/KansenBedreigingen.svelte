@@ -2,6 +2,7 @@
   import { kansOfDreiging, kansOfDreigingWithValue, mapSelection, mapSelectionWithValue } from "$lib/stores";
   import { select } from "d3";
   import { kansdreigingInfo } from '$lib/noncomponents/kansendreigingenInfo.js'
+    import { onMount } from "svelte";
 
   export let w;
   export let h;
@@ -59,6 +60,19 @@
     select('.legend-tooltip').style('visibility', 'hidden')
   }
 
+  const createClassName = (naam) => naam.replaceAll('/','').replaceAll(' ','').replaceAll('-','').replaceAll(',','').replaceAll('.','')
+
+  // onMount(() => {
+  //   categorieen.forEach(categorie => {
+  //     categorie.elements.forEach(element => {
+  //       const box = document.getElementsByClassName('element_' + createClassName(element))[0].getBoundingClientRect()
+  //       console.log(box)
+  //       select('.element_' + createClassName(element) + ' .kansimg')
+  //         .style('transform', 'translate(-40px,-20px)')
+  //     });
+  //   });
+  // })
+
 </script>
 
 {#each categorieen as categorie}
@@ -67,14 +81,14 @@
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class='elements'>
       {#each categorie.elements as element}
-        <div class='element' style='width:{(w/4)-1}px;
+        <div class='element element_{createClassName(element)}' style='width:{(w/4)-1}px;
           {($kansOfDreiging && $kansOfDreiging.includes(kansOfDreigingNameToCode(element))) 
             ? ($kansOfDreigingWithValue && $kansOfDreigingWithValue[1].includes(kansOfDreigingNameToCode(element)))
               ? 'background-color:#FFF4E5'
               : 'background-color:#FFE0B1'
             : ""} '
           on:click={() => click(element)}>
-          <img class='kansimg' src='./images/info.png' width='15px' x='-23' y='-14' style='opacity:0.7' on:mouseover={(e) => infoMouseOver(e, element)} on:mouseout={(e) => infoMouseOut()}/>
+          <img class='kansimg' src='./images/info.png' width='20px' style='opacity:0.7' on:mouseover={(e) => infoMouseOver(e, element)} on:mouseout={(e) => infoMouseOut()}/>
           <img src='./images/{element.replaceAll('&', '').replaceAll('/', '')}.png'
           style='width:{w/11}px' alt='Afbeelding van {categorie.name}'/>
           <p class='element-p'>{element}</p>
@@ -154,7 +168,7 @@
 
   .kansimg{
     position:absolute;
-    transform: translate(-30px, -13px);
+    transform:translate(-48px,-20px);
   }
 
 
