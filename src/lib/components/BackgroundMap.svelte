@@ -40,7 +40,7 @@
 
   const tileLayerOptions = {
       minZoom: 2,
-      maxZoom: 20,
+      maxZoom: 11,
       maxNativeZoom: 19,
       attribution: "© OpenStreetMap contributors",
       maxBounds: [[51.263871, 3.892372],[52.263871, 4.892372]],
@@ -48,6 +48,8 @@
 
   onMount(() => {
     leafletMap.set($leafletMap.getMap())
+
+    L.control.scale().addTo($leafletMap);
 
     select('.spinner-item')
       .style('visibility', 'hidden')

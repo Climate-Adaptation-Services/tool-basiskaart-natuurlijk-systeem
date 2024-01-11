@@ -168,7 +168,7 @@
 
   .kansimg{
     position:absolute;
-    transform:translate(-48px,-20px);
+    transform:translate(-28px,-10px);
   }
 
 
