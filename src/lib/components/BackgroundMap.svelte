@@ -5,7 +5,7 @@
   import Shape from '$lib/components/Shape.svelte'
   import { onMount, afterUpdate } from 'svelte'
   import { leafletMap, subtypeFeatures, shapeOpacity, mapSelection, clickLocation } from '$lib/stores.js';
-  import 'leaflet.pattern'
+  import 'leaflet.pattern?client'
   import flip from "@turf/flip";
 
   import LoadingIcon from './LoadingIcon.svelte'
@@ -51,14 +51,16 @@
       maxBounds: [[51.263871, 3.892372],[52.263871, 4.892372]],
   };
 
-  onMount(() => {
+  onMount(async () => {
     leafletMap.set($leafletMap.getMap())
 
     L.control.scale().addTo($leafletMap);
 
     select('.spinner-item')
       .style('visibility', 'hidden')
-    
+
+    // const LP = await import('leaflet.pattern');
+
     // stedelijk gebied
     const stripes = new L.StripePattern({weight:2, angle:45, color:'grey'});
     stripes.addTo($leafletMap);
