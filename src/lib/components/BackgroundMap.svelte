@@ -59,8 +59,6 @@
     select('.spinner-item')
       .style('visibility', 'hidden')
 
-    // const LP = await import('leaflet.pattern');
-
     // stedelijk gebied
     const stripes = new L.StripePattern({weight:2, angle:45, color:'grey'});
     stripes.addTo($leafletMap);

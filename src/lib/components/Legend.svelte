@@ -219,8 +219,8 @@
             </g>
             {#if k === 2 && i === group.length-1 && j === landschapstypen[landschapstype].length-1}
               <g class='stedelijk-gebied-legend' transform='translate({0},{0})'>
-                <image href='/images/sg.png' width='2em' y='{j+1.8}em' x='60' />
-                <text y='{j+2.34}em' x='100' font-weight='bold' font-size='16'>Begrenzing stedelijk gebied</text>
+                <image href='/images/sg.png' width='2em' y='{j+1.8}em' x='40' />
+                <text y='{j+2.34}em' x='80' font-weight='bold' font-size='16'>Begrenzing stedelijk gebied</text>
               </g>
             {/if}
           {/each}
