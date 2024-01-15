@@ -5,6 +5,8 @@
   import Shape from '$lib/components/Shape.svelte'
   import { onMount, afterUpdate } from 'svelte'
   import { leafletMap, subtypeFeatures, shapeOpacity, mapSelection, clickLocation } from '$lib/stores.js';
+  import 'leaflet.pattern'
+  import flip from "@turf/flip";
 
   import LoadingIcon from './LoadingIcon.svelte'
   import * as topojson from "topojson-client";
@@ -26,6 +28,9 @@
   let bnsData6 = topojsonsimplify.presimplify(datajson[5])
   bnsData6 = topojson.feature(bnsData6, bnsData6.objects['BKNSN_2023_xaaaf'])
 
+  let stedGebied = topojsonsimplify.presimplify(datajson[6])
+  stedGebied = topojson.feature(stedGebied, stedGebied.objects['TOP10NL_Plaats'])
+
   subtypeFeatures.set([...bnsData1.features, ...bnsData2.features, ...bnsData3.features, ...bnsData4.features, ...bnsData5.features, ...bnsData6.features])
 
   $: console.log($subtypeFeatures)
@@ -40,7 +45,7 @@
 
   const tileLayerOptions = {
       minZoom: 2,
-      maxZoom: 12,
+      maxZoom: 14,
       maxNativeZoom: 19,
       attribution: "© OpenStreetMap contributors",
       maxBounds: [[51.263871, 3.892372],[52.263871, 4.892372]],
@@ -53,6 +58,25 @@
 
     select('.spinner-item')
       .style('visibility', 'hidden')
+    
+    // stedelijk gebied
+    const stripes = new L.StripePattern({weight:2, angle:45, color:'grey'});
+    stripes.addTo($leafletMap);
+
+    const sg = new L.Polygon(flip(stedGebied.features[0]).geometry.coordinates, {
+      fillPattern: stripes,
+      fillOpacity: 1.0,
+      color:'black',
+      weight:0.4,});
+      
+
+    $leafletMap.on('zoomend', function (e) {
+      if(e.target._zoom >= 12){
+        sg.addTo($leafletMap);
+      }else{
+        sg.remove()
+      }
+    });
   })
 
   function onOpacityChange(event){
@@ -68,7 +92,7 @@
 
 <div class="backgroundMap">
   <div class='opacity_span' style='top:{map_element.top + 10}px; left:{map_element.right-210}px'>
-    <label for='opacity_slider' style='font-size:16px'>Opacity</label>
+    <label for='opacity_slider' style='font-size:16px'>Transparantie</label>
     <input id='opacity_slider' value='100' type="range" min="0" max="100" on:change={onOpacityChange}>
   </div>
 

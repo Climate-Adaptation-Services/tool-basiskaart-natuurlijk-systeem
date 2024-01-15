@@ -13,6 +13,15 @@ export const subtypeFeatures = writable(null)
 export const shapeOpacity = writable(1)
 
 
+
+
+
+
+
+
+
+
+
 // export const subtypenColors = {
 //   'Strandwal':'#FDCD66',
 //   'Strandvlakte':'#F2FFD5',

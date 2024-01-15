@@ -13,10 +13,12 @@
       fetch('https://raw.githubusercontent.com/Climate-Adaptation-Services/BNS-data/main/BKNSN_2023_xaaac.json'),
       fetch('https://raw.githubusercontent.com/Climate-Adaptation-Services/BNS-data/main/BKNSN_2023_xaaad.json'),
       fetch('https://raw.githubusercontent.com/Climate-Adaptation-Services/BNS-data/main/BKNSN_2023_xaaae.json'),
-      fetch('https://raw.githubusercontent.com/Climate-Adaptation-Services/BNS-data/main/BKNSN_2023_xaaaf.json')
+      fetch('https://raw.githubusercontent.com/Climate-Adaptation-Services/BNS-data/main/BKNSN_2023_xaaaf.json'),
+      
+      fetch('https://raw.githubusercontent.com/Climate-Adaptation-Services/BNS-data/main/TOP10NL_Plaats-topo.json'),
     ])
 
-    return [await response[0].json(), await response[1].json(), await response[2].json(), await response[3].json(), await response[4].json(), await response[5].json()]//, await response[1].json(), await response[2].json(), await response[3].json(), await response[4].json()]//, await response[2].json(), await response[3].json(), await response[4].json(), await response[5].json(), await response[6].json(), await response[7].json(), await response[8].json()]
+    return [await response[0].json(), await response[1].json(), await response[2].json(), await response[3].json(), await response[4].json(), await response[5].json(), await response[6].json()]
 
 	})()
 

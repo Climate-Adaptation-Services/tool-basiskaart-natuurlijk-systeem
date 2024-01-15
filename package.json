@@ -26,6 +26,7 @@
 		"leaflet": "^1.9.3",
 		"leaflet-search": "^3.0.9",
 		"leaflet.control.opacity": "^1.6.0",
+		"leaflet.pattern": "^0.1.0",
 		"lodash": "^4.17.21",
 		"svelte-leafletjs": "^0.10.0",
 		"svelte-loading-spinners": "^0.3.4",
