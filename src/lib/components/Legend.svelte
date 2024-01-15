@@ -118,7 +118,7 @@
   function mouseout(subtype, i, j){
     if(!$mapSelection.includes(subtype.code)){
       select('.rect-' + createClassName(subtype.name) + '-' + i + '-' + j)
-      .attr('fill', 'white')
+      .attr('fill', 'none')
     }
   }
 
@@ -196,7 +196,7 @@
   <p class='legend-text'></p>
 </div>
 <svg class='svg-legend' viewBox="0 0 900 400" preserveAspectRatio="xMidYMid meet">
-  <rect width='100%' height='100%' fill='white' on:click={() => clickRemove()}></rect>
+  <rect width='100%' height='100%' fill='#fffcf8' on:click={() => clickRemove()}></rect>
   <g transform='translate({margin.left},{margin.top})'>
     {#each [group1, group2, group3] as group, k}
       {#each group as landschapstype, i}
@@ -212,16 +212,23 @@
                   ? ($mapSelectionWithValue[1].includes(subtype.code)) 
                     ? '#FFF4E5'
                     : '#FFD9A2'
-                  : 'white'}'>
+                  : 'none'}'>
               </rect>
               <rect height='1em' width='40px' x=0 y='{j+0.5}em' fill={dataKansenDreigingen.filter(d => d['BKNSN_code'] === subtype.code)[0]['kleur']}></rect>
               <text y='{j+1.34}em' x='45px' style="{($mapSelection.includes(subtype.code)) ? 'font-weight:bold' : ''}">{subtype.name}</text>
             </g>
+            {#if k === 2 && i === group.length-1 && j === landschapstypen[landschapstype].length-1}
+              <g class='stedelijk-gebied-legend' transform='translate({0},{0})'>
+                <image href='/images/sg.png' width='2em' y='{j+1.8}em' x='60' />
+                <text y='{j+2.34}em' x='100' font-weight='bold' font-size='16'>Begrenzing stedelijk gebied</text>
+              </g>
+            {/if}
           {/each}
         </g>
       {/each}
     {/each}
   </g>
+
 </svg>
 
 <style>
@@ -260,6 +267,10 @@
     width:750px;
     padding:20px 40px 20px 40px;
     z-index: 100000;
+  }
+
+  svg{
+    background-color: #fffcf8;
   }
 
 </style>
