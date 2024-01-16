@@ -68,7 +68,8 @@
       fillPattern: stripes,
       fillOpacity: 1.0,
       color:'black',
-      weight:0.4,});
+      weight:0.4,
+      interactive:false});
       
 
     $leafletMap.on('zoomend', function (e) {
