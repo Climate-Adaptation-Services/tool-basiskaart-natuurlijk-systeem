@@ -43,7 +43,7 @@
   }
 
   function infoMouseOver(e, element){
-    console.log('ello')
+    console.log(e)
     select('.legend-text')
       .html(kansdreigingInfo[element])
 
@@ -52,8 +52,8 @@
 
     select('.legend-tooltip')
       .style('visibility', 'visible')
-      .style('left', 15 + e.clientX + 'px')
-      .style('top', -150 + e.clientY + 'px')
+      // .style('left', 15 + e.clientX + 'px')
+      // .style('top', -150 + e.clientY + 'px')
   }
 
   function infoMouseOut(){

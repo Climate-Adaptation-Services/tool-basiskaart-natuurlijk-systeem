@@ -171,8 +171,6 @@
 
     select('.legend-tooltip')
       .style('visibility', 'visible')
-      .style('left', 10 + e.clientX + 'px')
-      .style('top', 10 + e.clientY + 'px')
   }
 
   function infoMouseOut(){
@@ -191,7 +189,7 @@
     <text x='30' y='65' fill='darkred' text-anchor='middle'>selectie</text>
   </svg>
 </div>
-<div class='legend-tooltip' style='visibility: hidden;'>
+<div class='legend-tooltip' style='visibility: hidden; left:{(screen.width-750)/2}px; width:750px; top:200px;'>
   <h4 class='legend-title'></h4>
   <p class='legend-text'></p>
 </div>
@@ -264,9 +262,10 @@
     background-color: #FFF4E5;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
     font-size: 16px;
-    width:750px;
+    /* width:750px; */
     padding:20px 40px 20px 40px;
     z-index: 100000;
+    pointer-events: none;
   }
 
   svg{

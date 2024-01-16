@@ -45,7 +45,7 @@
 
   const tileLayerOptions = {
       minZoom: 2,
-      maxZoom: 14,
+      maxZoom: 13,
       maxNativeZoom: 19,
       attribution: "© OpenStreetMap contributors",
       maxBounds: [[51.263871, 3.892372],[52.263871, 4.892372]],

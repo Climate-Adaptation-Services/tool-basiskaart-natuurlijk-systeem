@@ -73,7 +73,7 @@
 
 .side-panel{
 	width:55%;
-	background-color: aliceblue;
+	background-color: rgb(250, 245, 237);
 }
 
 .map{
