@@ -4,6 +4,7 @@
   import { select } from 'd3';
   import { Circle } from 'svelte-loading-spinners';
   import { landschapsInfo } from '$lib/noncomponents/landschapstypeInfo.js'
+    import { browser } from '$app/environment';
 
   export let legendWidth;
   export let legendHeight;
@@ -189,7 +190,7 @@
     <text x='30' y='65' fill='darkred' text-anchor='middle'>selectie</text>
   </svg>
 </div>
-{#if screen}
+{#if browser}
   <div class='legend-tooltip' style='visibility: hidden; left:{(screen.width-750)/2}px; width:750px; top:200px;'>
     <h4 class='legend-title'></h4>
     <p class='legend-text'></p>
