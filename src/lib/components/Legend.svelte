@@ -179,11 +179,11 @@
   }
 
   afterUpdate(() => {
-    const sgl = document.getElementsByClassName('sgl-image')[0]
+    const sgl = document.getElementsByClassName('sgl-text')[0]
     const box = sgl.getBoundingClientRect()
     select('.switch')
-      .style('left', box.left - 50 + 'px')
-      .style('top', box.top - 5 + 'px')
+      .style('left', box.right-10 + 'px')
+      .style('top', box.top - 10 + 'px')
   })
 
 </script>
@@ -232,8 +232,9 @@
             </g>
             {#if k === 2 && i === group.length-1 && j === landschapstypen[landschapstype].length-1}
               <g class='stedelijk-gebied-legend' transform='translate({0},{0})'>
-                <image class='sgl-image' href='/images/sg.png' width='2em' y='{j+1.8}em' x='40' />
-                <text y='{j+2.34}em' x='80' font-weight='bold' font-size='16'>Begrenzing stedelijk gebied</text>
+                <image href='/images/info.png' width='18px' y='{j+2.34}em' x='-22' opacity='0.7'/>
+                <image class='sgl-image' href='/images/sg.png' width='2em' y='{j+1.8}em' x='2' />
+                <text class='sgl-text' y='{j+3.4}em' x='36' font-weight='bold' font-size='14'>Begrenzing stedelijk gebied</text>
               </g>
             {/if}
           {/each}
