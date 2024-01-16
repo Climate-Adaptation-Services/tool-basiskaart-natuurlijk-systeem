@@ -2,7 +2,7 @@
   import { kansOfDreiging, kansOfDreigingWithValue, mapSelection, mapSelectionWithValue } from "$lib/stores";
   import { select } from "d3";
   import { kansdreigingInfo } from '$lib/noncomponents/kansendreigingenInfo.js'
-    import { onMount } from "svelte";
+  import { onMount } from "svelte";
 
   export let w;
   export let h;

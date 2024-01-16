@@ -189,10 +189,12 @@
     <text x='30' y='65' fill='darkred' text-anchor='middle'>selectie</text>
   </svg>
 </div>
-<div class='legend-tooltip' style='visibility: hidden; left:{(screen.width-750)/2}px; width:750px; top:200px;'>
-  <h4 class='legend-title'></h4>
-  <p class='legend-text'></p>
-</div>
+{#if screen}
+  <div class='legend-tooltip' style='visibility: hidden; left:{(screen.width-750)/2}px; width:750px; top:200px;'>
+    <h4 class='legend-title'></h4>
+    <p class='legend-text'></p>
+  </div>
+{/if}
 <svg class='svg-legend' viewBox="0 0 900 400" preserveAspectRatio="xMidYMid meet">
   <rect width='100%' height='100%' fill='#fffcf8' on:click={() => clickRemove()}></rect>
   <g transform='translate({margin.left},{margin.top})'>
