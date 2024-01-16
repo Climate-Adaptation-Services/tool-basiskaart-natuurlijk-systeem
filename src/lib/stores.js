@@ -11,7 +11,7 @@ export const kansOfDreiging = writable(null);
 export const kansOfDreigingWithValue = writable(null);
 export const subtypeFeatures = writable(null)
 export const shapeOpacity = writable(1)
-
+export const stedelijkGebiedToggle = writable('on')
 
 
 

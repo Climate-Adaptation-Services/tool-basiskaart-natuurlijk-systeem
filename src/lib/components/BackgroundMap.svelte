@@ -4,7 +4,7 @@
   import { select } from 'd3';
   import Shape from '$lib/components/Shape.svelte'
   import { onMount, afterUpdate } from 'svelte'
-  import { leafletMap, subtypeFeatures, shapeOpacity, mapSelection, clickLocation } from '$lib/stores.js';
+  import { leafletMap, subtypeFeatures, shapeOpacity, mapSelection, clickLocation, stedelijkGebiedToggle } from '$lib/stores.js';
   import 'leaflet.pattern?client'
   import flip from "@turf/flip";
 
@@ -51,6 +51,7 @@
       maxBounds: [[51.263871, 3.892372],[52.263871, 4.892372]],
   };
 
+  let sg;
   onMount(async () => {
     leafletMap.set($leafletMap.getMap())
 
@@ -63,7 +64,7 @@
     const stripes = new L.StripePattern({weight:2, angle:45, color:'grey'});
     stripes.addTo($leafletMap);
 
-    const sg = new L.Polygon(flip(stedGebied.features[0]).geometry.coordinates, {
+    sg = new L.Polygon(flip(stedGebied.features[0]).geometry.coordinates, {
       fillPattern: stripes,
       fillOpacity: 1.0,
       color:'black',
@@ -71,13 +72,22 @@
       
 
     $leafletMap.on('zoomend', function (e) {
-      if(e.target._zoom >= 12){
+      if(e.target._zoom >= 12 && $stedelijkGebiedToggle === 'on'){
         sg.addTo($leafletMap);
       }else{
         sg.remove()
       }
     });
   })
+
+  $: if($leafletMap){
+    if($stedelijkGebiedToggle === 'off'){
+      sg.remove()
+    }else if($leafletMap.getZoom() >= 12){
+      sg.addTo($leafletMap);
+    }
+  }
+
 
   function onOpacityChange(event){
     shapeOpacity.set(event.target.value/100)

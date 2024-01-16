@@ -1,16 +1,16 @@
 <script>
   import { uniq, map } from 'lodash'
-  import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue, kansOfDreigingWithValue } from '$lib/stores';
+  import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue, kansOfDreigingWithValue, stedelijkGebiedToggle } from '$lib/stores';
   import { select } from 'd3';
   import { Circle } from 'svelte-loading-spinners';
   import { landschapsInfo } from '$lib/noncomponents/landschapstypeInfo.js'
-    import { browser } from '$app/environment';
+  import { browser } from '$app/environment';
+  import Switch from './Switch.svelte'
+  import { afterUpdate } from 'svelte';
 
   export let legendWidth;
   export let legendHeight;
   export let dataKansenDreigingen
-
-  // const subtypen = uniq(map(dataKansenDreigingen, 'Sublandschap'))
   
   const landschapstypen = {
     'Strandwallen en binnenduinrand':[
@@ -178,6 +178,14 @@
     select('.legend-tooltip').style('visibility', 'hidden')
   }
 
+  afterUpdate(() => {
+    const sgl = document.getElementsByClassName('sgl-image')[0]
+    const box = sgl.getBoundingClientRect()
+    select('.switch')
+      .style('left', box.left - 50 + 'px')
+      .style('top', box.top - 5 + 'px')
+  })
+
 </script>
 
 <div class='removeselection' style='visibility:{($mapSelection.length > 0) ? 'visible' : 'hidden'}'>
@@ -196,6 +204,10 @@
     <p class='legend-text'></p>
   </div>
 {/if}
+<div class='switch'>
+  <Switch bind:value={$stedelijkGebiedToggle} label="" design="slider" />
+</div>
+
 <svg class='svg-legend' viewBox="0 0 900 400" preserveAspectRatio="xMidYMid meet">
   <rect width='100%' height='100%' fill='#fffcf8' on:click={() => clickRemove()}></rect>
   <g transform='translate({margin.left},{margin.top})'>
@@ -220,7 +232,7 @@
             </g>
             {#if k === 2 && i === group.length-1 && j === landschapstypen[landschapstype].length-1}
               <g class='stedelijk-gebied-legend' transform='translate({0},{0})'>
-                <image href='/images/sg.png' width='2em' y='{j+1.8}em' x='40' />
+                <image class='sgl-image' href='/images/sg.png' width='2em' y='{j+1.8}em' x='40' />
                 <text y='{j+2.34}em' x='80' font-weight='bold' font-size='16'>Begrenzing stedelijk gebied</text>
               </g>
             {/if}
@@ -273,6 +285,10 @@
 
   svg{
     background-color: #fffcf8;
+  }
+
+  .switch{
+    position:absolute;
   }
 
 </style>
