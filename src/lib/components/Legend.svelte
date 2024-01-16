@@ -191,7 +191,7 @@
   </svg>
 </div>
 {#if browser}
-  <div class='legend-tooltip' style='visibility: hidden; left:{(screen.width-750)/2}px; width:750px; top:200px;'>
+  <div class='legend-tooltip' style='visibility: hidden; left:{(screen.width-750)/2}px; width:750px; top:{screen.height*0.1}px;'>
     <h4 class='legend-title'></h4>
     <p class='legend-text'></p>
   </div>
