@@ -123,6 +123,7 @@
     align-items: stretch;
     justify-content: center;
     padding:10px 0px 10px 0px;
+    border: 4px solid rgb(150,150,150);
   }
 
   .legenda-item{
