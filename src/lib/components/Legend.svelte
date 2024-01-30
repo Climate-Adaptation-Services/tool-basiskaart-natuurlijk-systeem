@@ -1,12 +1,13 @@
 <script>
   import { uniq, map } from 'lodash'
-  import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue, kansOfDreigingWithValue, stedelijkGebiedToggle } from '$lib/stores';
+  import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue, kansOfDreigingWithValue, stedelijkGebiedToggle, kansOfDreigingHover, legendHover } from '$lib/stores';
   import { select } from 'd3';
   import { Circle } from 'svelte-loading-spinners';
   import { landschapsInfo } from '$lib/noncomponents/landschapstypeInfo.js'
   import { browser } from '$app/environment';
   import Switch from './Switch.svelte'
   import { afterUpdate } from 'svelte';
+  import { kansdreigingInfo } from '$lib/noncomponents/kansendreigingenInfo.js'
 
   export let legendWidth;
   export let legendHeight;
@@ -164,18 +165,11 @@
   }
 
   function infoMouseOver(e, landschapstype){
-    select('.legend-text')
-      .html(landschapsInfo[landschapstype])
-
-    select('.legend-title')
-      .html(landschapstype)
-
-    select('.legend-tooltip')
-      .style('visibility', 'visible')
+    legendHover.set(landschapstype)
   }
 
   function infoMouseOut(){
-    select('.legend-tooltip').style('visibility', 'hidden')
+    legendHover.set('')
   }
 
   afterUpdate(() => {
@@ -199,9 +193,9 @@
   </svg>
 </div>
 {#if browser}
-  <div class='legend-tooltip' style='visibility: hidden; left:{(screen.width-750)/2}px; width:750px; top:{screen.height*0.1}px;'>
-    <h4 class='legend-title'></h4>
-    <p class='legend-text'></p>
+  <div class='legend-tooltip' style='visibility: {($kansOfDreigingHover || $legendHover) ? 'visible' : 'hidden'}; left:{(screen.width-750)/2}px; width:750px; top:{screen.height*0.1}px;'>
+    <h4 class='legend-title'>{@html (($kansOfDreigingHover) ? $kansOfDreigingHover.replace('grondwaterafh.', 'grondwaterafhankelijke') : $legendHover).replaceAll('CO2','CO<sub>2</sub>')}</h4>
+    <p class='legend-text'>{@html ($kansOfDreigingHover) ? kansdreigingInfo[$kansOfDreigingHover].replaceAll('CO2','CO<sub>2</sub>') : landschapsInfo[$legendHover].replaceAll('CO2','CO<sub>2</sub>')}</p>
   </div>
 {/if}
 <div class='switch'>
@@ -291,5 +285,7 @@
   .switch{
     position:absolute;
   }
+
+
 
 </style>

@@ -1,7 +1,6 @@
 <script>
-  import { kansOfDreiging, kansOfDreigingWithValue, mapSelection, mapSelectionWithValue } from "$lib/stores";
+  import { kansOfDreiging, kansOfDreigingWithValue, mapSelection, mapSelectionWithValue, kansOfDreigingHover } from "$lib/stores";
   import { select } from "d3";
-  import { kansdreigingInfo } from '$lib/noncomponents/kansendreigingenInfo.js'
   import { onMount } from "svelte";
 
   export let w;
@@ -42,22 +41,12 @@
     }, 1);
   }
 
-  function infoMouseOver(e, element){
-    console.log(e)
-    select('.legend-text')
-      .html(kansdreigingInfo[element])
-
-    select('.legend-title')
-      .html(element)
-
-    select('.legend-tooltip')
-      .style('visibility', 'visible')
-      // .style('left', 15 + e.clientX + 'px')
-      // .style('top', -150 + e.clientY + 'px')
+  function infoMouseOver(e, element){    
+    kansOfDreigingHover.set(element)
   }
 
   function infoMouseOut(){
-    select('.legend-tooltip').style('visibility', 'hidden')
+    kansOfDreigingHover.set(null)
   }
 
   const createClassName = (naam) => naam.replaceAll('/','').replaceAll(' ','').replaceAll('-','').replaceAll(',','').replaceAll('.','')

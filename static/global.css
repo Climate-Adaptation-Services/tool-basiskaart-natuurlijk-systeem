@@ -97,3 +97,8 @@ button:focus {
 	background-size: 18px;
 	background-color: rgba(255, 255, 255, 1);
 }
+
+sub {
+	vertical-align: sub;
+	font-size: smaller;
+}
