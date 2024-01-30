@@ -65,7 +65,7 @@
 </script>
 
 {#each categorieen as categorie}
-  <div class='categorie'>
+  <div class='categorie' style='width:{(categorie.name === 'Landgebruik' || categorie.name === 'Verzilting') ? 50 : 100}%'>
     <p class='categoryname'><strong>{categorie.name}</strong></p>
     <!-- svelte-ignore a11y-click-events-have-key-events -->
     <div class='elements'>
@@ -85,20 +85,53 @@
       {/each}
     </div>
   </div>
+  {#if categorie.name === 'Landgebruik' && ($kansOfDreiging || $mapSelection.length>0)}
+    <div class='legenda-matig-sterk'>
+      <p style='margin:0px 0px 10px 0px; color:rgb(100,100,100)'><em>Dreiging/kans speelt:</em></p>
+      <div class='matig legenda-item' style='background-color:#FFF4E5'>
+        <p>Matig</p>
+      </div>
+      <div class='sterk legenda-item' style='background-color:#FFD9A2'>
+        <p>Sterk</p>
+      </div>
+    </div>
+  {/if} 
 {/each}
-
 
 <style>
   .categorie{
-    width:100%;
     display: flex;
     flex-direction:column;
     margin-bottom: 1vh;
     /* border: 1px solid steelblue; */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    background-color: white;
+    background-color: rgb(252, 250, 248);
     padding-top:5px;
     padding-bottom:3px;
+    float:left;
+  }
+
+  .legenda-matig-sterk{
+    float:right;
+    background-color: rgb(252, 250, 248);
+    width:45%;
+    height:100px;
+    margin-left:10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    padding:10px 0px 10px 0px;
+  }
+
+  .legenda-item{
+    margin: 0px 40px 0px 40px;
+    flex:1;
+    height:20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .elements{
