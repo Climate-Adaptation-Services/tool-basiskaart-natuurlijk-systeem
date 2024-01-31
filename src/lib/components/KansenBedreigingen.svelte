@@ -114,7 +114,7 @@
   .legenda-matig-sterk{
     float:right;
     background-color: rgb(252, 250, 248);
-    width:45%;
+    width:42%;
     height:100px;
     margin-left:10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
