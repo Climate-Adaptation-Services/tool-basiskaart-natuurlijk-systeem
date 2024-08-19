@@ -1,5 +1,4 @@
 <script>
-  import { uniq, map } from 'lodash'
   import { mapSelection, clickLocation, kansOfDreiging, mapSelectionWithValue, kansOfDreigingWithValue, stedelijkGebiedToggle, kansOfDreigingHover, legendHover } from '$lib/stores';
   import { select } from 'd3';
   import { Circle } from 'svelte-loading-spinners';
@@ -187,7 +186,7 @@
   <svg cursor='pointer' class='svgremoveselection' on:click={() => clickRemove()} >
     <!-- <rect width='60px' height='70px' stroke='black' fill='none'></rect> -->
     <!-- <circle cx='25' cy='25' r=20 fill='white'></circle> -->
-    <path d='M20 10, L40,30, M20 30, L40 10' stroke='black' fill="black" stroke-linecap="round" stroke-width='6'></path>
+    <path d='M20 10 L40 30 M20 30 L40 10' stroke='black' fill="black" stroke-linecap="round" stroke-width='6'></path>
     <text x='30' y='50' fill='darkred' text-anchor='middle'>Verwijder</text>
     <text x='30' y='65' fill='darkred' text-anchor='middle'>selectie</text>
   </svg>

@@ -7,8 +7,16 @@
 
 	export let data
 
-	const dataKansenDreigingen = data.data;
-	const metaKansenDreigingen = data.meta;
+	let dataKansenDreigingen
+	let metaKansenDreigingen
+
+
+	Promise.all(data.data).then(res => {
+		console.log(res)
+
+		dataKansenDreigingen = res[0]
+		metaKansenDreigingen = res[1]
+	})
 
 	console.log(dataKansenDreigingen)
 	console.log(metaKansenDreigingen)
@@ -35,29 +43,30 @@
 
 <div class='container'>
 	<!-- <Alert /> -->
-
-	<div class='side-panel'>
-		<div class='legend'>
-			<Legend legendWidth={wMap} legendHeight={hMap/2} {dataKansenDreigingen} />
-		</div>
-		<div class='kansen-bedreigingen'>
-			<div class='bedreigingen'>
-				<h3>Klimaatdreigingen</h3>
-				<div class='kansendreigingen-div' bind:clientWidth={wKansen} bind:clientHeight={hKansen}>
-					<KansenBedreigingen w={wKansen} h={hKansen} categorieen={klimaatDreigingen} data={dataKansenDreigingen} meta={metaKansenDreigingen}/>
+	{#if dataKansenDreigingen}
+		<div class='side-panel'>
+			<div class='legend'>
+				<Legend legendWidth={wMap} legendHeight={hMap/2} {dataKansenDreigingen} />
+			</div>
+			<div class='kansen-bedreigingen'>
+				<div class='bedreigingen'>
+					<h3>Klimaatdreigingen</h3>
+					<div class='kansendreigingen-div' bind:clientWidth={wKansen} bind:clientHeight={hKansen}>
+						<KansenBedreigingen w={wKansen} h={hKansen} categorieen={klimaatDreigingen} data={dataKansenDreigingen} meta={metaKansenDreigingen}/>
+					</div>
+				</div>
+				<div class='kansen'>
+					<h3>Adaptatiekansen</h3>
+					<div class='kansendreigingen-div' style='margin-left:3%' bind:clientWidth={wKansen} bind:clientHeight={hKansen}>
+						<KansenBedreigingen w={wKansen} h={hKansen} categorieen={adaptatieKansen} data={dataKansenDreigingen} meta={metaKansenDreigingen}/>
+					</div>
 				</div>
 			</div>
-			<div class='kansen'>
-				<h3>Adaptatiekansen</h3>
-				<div class='kansendreigingen-div' style='margin-left:3%' bind:clientWidth={wKansen} bind:clientHeight={hKansen}>
-					<KansenBedreigingen w={wKansen} h={hKansen} categorieen={adaptatieKansen} data={dataKansenDreigingen} meta={metaKansenDreigingen}/>
-				</div>
-			</div>
 		</div>
-	</div>
-	<div class='map' bind:clientWidth={wMap} bind:clientHeight={hMap} >
-		<Map mapWidth={wMap} mapHeight={hMap} {dataKansenDreigingen}/>
-	</div>
+		<div class='map' bind:clientWidth={wMap} bind:clientHeight={hMap} >
+			<Map mapWidth={wMap} mapHeight={hMap} {dataKansenDreigingen}/>
+		</div>
+	{/if}
 </div>
 
 
