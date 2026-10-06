@@ -90,10 +90,12 @@
   }
 
 
-  let opacityValue = 100
+  // Sliderwaarde is transparantie in procenten: 0% = volledig dekkend, 100% = onzichtbaar.
+  // De store houdt de omgekeerde waarde vast (fillOpacity van de vlakken).
+  let transparantie = 0
 
   function onOpacityChange(event){
-    shapeOpacity.set(event.target.value/100)
+    shapeOpacity.set(1 - event.target.value/100)
   }
 
 </script>
@@ -102,7 +104,7 @@
   <div class='opacity_span'>
     <div class='opacity_header'>
       <label for='opacity_slider'>Transparantie</label>
-      <span class='opacity_value' aria-hidden='true'>{opacityValue}%</span>
+      <span class='opacity_value' aria-hidden='true'>{transparantie}%</span>
     </div>
     <input
       id='opacity_slider'
@@ -111,9 +113,9 @@
       min='0'
       max='100'
       step='1'
-      value={opacityValue}
-      style='--fill:{opacityValue}%'
-      on:input={e => opacityValue = +e.target.value}
+      value={transparantie}
+      style='--fill:{transparantie}%'
+      on:input={e => transparantie = +e.target.value}
       on:change={onOpacityChange}>
   </div>
 
