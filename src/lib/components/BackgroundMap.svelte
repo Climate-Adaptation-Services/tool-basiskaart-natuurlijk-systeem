@@ -41,13 +41,13 @@
     zoom: 8,
   };
 
-  const tileUrl = 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png'
+  const tileUrl = 'https://service.pdok.nl/brt/achtergrondkaart/wmts/v2_0/standaard/EPSG:3857/{z}/{x}/{y}.png'
 
   const tileLayerOptions = {
       minZoom: 2,
       maxZoom: 13,
       maxNativeZoom: 19,
-      attribution: "© OpenStreetMap contributors",
+      attribution: 'Kaartgegevens © <a href="https://www.kadaster.nl">Kadaster</a>',
       maxBounds: [[51.263871, 3.892372],[52.263871, 4.892372]],
   };
 
