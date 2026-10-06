@@ -3,7 +3,7 @@
   import { LeafletMap, TileLayer, Marker } from 'svelte-leafletjs?client';
   import { select } from 'd3';
   import Shape from '$lib/components/Shape.svelte'
-  import { onMount, afterUpdate } from 'svelte'
+  import { onMount } from 'svelte'
   import { leafletMap, subtypeFeatures, shapeOpacity, mapSelection, clickLocation, stedelijkGebiedToggle } from '$lib/stores.js';
   import 'leaflet.pattern?client'
   import flip from "@turf/flip";
@@ -90,21 +90,31 @@
   }
 
 
+  let opacityValue = 100
+
   function onOpacityChange(event){
     shapeOpacity.set(event.target.value/100)
   }
 
-  let map_element = {top:0, right:0, left:0}
-  afterUpdate(() => {
-    map_element = document.getElementsByClassName('backgroundMap')[0].getBoundingClientRect()
-  })
-
 </script>
 
 <div class="backgroundMap">
-  <div class='opacity_span' style='top:{map_element.top + 10}px; left:{map_element.right-210}px'>
-    <label for='opacity_slider' style='font-size:16px'>Transparantie</label>
-    <input id='opacity_slider' value='100' type="range" min="0" max="100" on:change={onOpacityChange}>
+  <div class='opacity_span'>
+    <div class='opacity_header'>
+      <label for='opacity_slider'>Transparantie</label>
+      <span class='opacity_value' aria-hidden='true'>{opacityValue}%</span>
+    </div>
+    <input
+      id='opacity_slider'
+      class='opacity_slider'
+      type='range'
+      min='0'
+      max='100'
+      step='1'
+      value={opacityValue}
+      style='--fill:{opacityValue}%'
+      on:input={e => opacityValue = +e.target.value}
+      on:change={onOpacityChange}>
   </div>
 
   <LoadingIcon />
@@ -124,31 +134,165 @@
 </div>
 
 <style>
+  /* CAS: donkergroen #0A565E, blauwgroen #0C778B */
   .opacity_span{
-    z-index: 2000;
-    /* opacity: 0.8; */
-    background-color: white;
-    position: fixed;
-    width:200px;
-    height:70px;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1000;
+    width: 208px;
+    height: auto;
+    box-sizing: border-box;
+    padding: 11px 14px 13px;
     display: flex;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-    border-radius: 2px;
+    gap: 9px;
+    background-color: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: blur(8px) saturate(1.3);
+    backdrop-filter: blur(8px) saturate(1.3);
+    border: 1px solid rgba(10, 86, 94, 0.12);
+    border-radius: 10px;
+    box-shadow:
+      0 1px 2px rgba(10, 86, 94, 0.06),
+      0 4px 14px rgba(10, 86, 94, 0.10);
   }
 
-  input[type=range]{
-    /* fix for FF unable to apply focus style bug  */
-    border: 0.5px solid black; 
-  }
-  label{
-    font-size:14px; 
+  .opacity_header{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
   }
 
-	div{
-		height:100%;
-    width:100%;
-	}
+  .opacity_span label{
+    margin: 0;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    line-height: 1;
+    color: #0a565e;
+  }
+
+  .opacity_value{
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    color: #0c778b;
+  }
+
+  /* 24px hoog = minimale clickable target (WCAG 2.2 SC 2.5.8);
+     de zichtbare track is 6px en wordt centraal in die hoogte getekend. */
+  .opacity_slider{
+    -webkit-appearance: none;
+    appearance: none;
+    display: block;
+    width: 100%;
+    height: 24px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .opacity_slider:focus{
+    outline: none;
+  }
+
+  /* WebKit/Blink — track is één laag, dus de vulling komt uit een gradient op --fill.
+     Let op: webkit- en moz-pseudo's mogen NIET in één selectorlijst staan,
+     een onbekende selector invalideert daar de hele regel. */
+  .opacity_slider::-webkit-slider-runnable-track{
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      #0c778b 0 var(--fill),
+      rgba(10, 86, 94, 0.15) var(--fill) 100%
+    );
+  }
+
+  .opacity_slider::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-top: -5px; /* (6px track - 16px thumb) / 2 */
+    border-radius: 50%;
+    border: 2px solid #0c778b;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(10, 86, 94, 0.28);
+    transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  /* Firefox — heeft een eigen progress-pseudo, dus geen gradient nodig. */
+  .opacity_slider::-moz-range-track{
+    height: 6px;
+    border-radius: 999px;
+    background-color: rgba(10, 86, 94, 0.15);
+  }
+
+  .opacity_slider::-moz-range-progress{
+    height: 6px;
+    border-radius: 999px;
+    background-color: #0c778b;
+  }
+
+  .opacity_slider::-moz-range-thumb{
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #0c778b;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(10, 86, 94, 0.28);
+    transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  /* Hover alleen op apparaten met een echte cursor — touch triggert hover bij tap. */
+  @media (hover: hover) and (pointer: fine){
+    .opacity_slider:hover::-webkit-slider-thumb{
+      transform: scale(1.12);
+    }
+    .opacity_slider:hover::-moz-range-thumb{
+      transform: scale(1.12);
+    }
+  }
+
+  .opacity_slider:active::-webkit-slider-thumb{
+    transform: scale(0.96);
+  }
+
+  .opacity_slider:active::-moz-range-thumb{
+    transform: scale(0.96);
+  }
+
+  .opacity_slider:focus-visible::-webkit-slider-thumb{
+    box-shadow:
+      0 1px 3px rgba(10, 86, 94, 0.28),
+      0 0 0 3px rgba(12, 119, 139, 0.35);
+  }
+
+  .opacity_slider:focus-visible::-moz-range-thumb{
+    box-shadow:
+      0 1px 3px rgba(10, 86, 94, 0.28),
+      0 0 0 3px rgba(12, 119, 139, 0.35);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .opacity_slider::-webkit-slider-thumb{
+      transition: none;
+    }
+    .opacity_slider::-moz-range-thumb{
+      transition: none;
+    }
+  }
+
+  .backgroundMap{
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
 
 </style>
